@@ -1,0 +1,13 @@
+{
+  "name": "main-project",
+  "version": "1.0.0",
+  "description": "POS application with MERN Stack",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
