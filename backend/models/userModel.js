@@ -24,14 +24,14 @@ const userSchema = new mongoose.Schema({
         minLength: [4, "Password should have atleast 8 chars"],
         select: false,
     },
-    // avatar: {
-    //     public_id: {
-    //         type: String,
-    //     },
-    //     url: {
-    //         type: String,
-    //     },
-    // },
+    avatar: {
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        },
+    },
     role: {
         type: String,
         default: "user",
