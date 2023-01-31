@@ -21,17 +21,17 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Please Enter Your Password"],
-        minLength: [8, "Password should have atleast 8 chars"],
+        minLength: [4, "Password should have atleast 8 chars"],
         select: false,
     },
-    avatar: {
-        public_id: {
-            type: String,
-        },
-        url: {
-            type: String,
-        },
-    },
+    // avatar: {
+    //     public_id: {
+    //         type: String,
+    //     },
+    //     url: {
+    //         type: String,
+    //     },
+    // },
     role: {
         type: String,
         default: "user",
@@ -53,8 +53,8 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.getJWTToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE,
+    return jwt.sign({ id: this._id }, 'WFFWf15115U842UGUBWF81EE858UYBY51BGBJ5E51Q', {
+        expiresIn: '7d',
     });
 };
 
