@@ -1,0 +1,95 @@
+Node.js Express User Management API
+This API allows users to register, login, logout, and manage their profiles. It also includes endpoints for admin users to manage other users.
+
+Features
+Register new user
+Login with email and password
+Logout current user session
+Retrieve user details
+Update user password
+Update user profile details
+Forgotten password recovery
+Admin-only endpoints to retrieve all users and individual users, update user roles, and delete users
+Endpoints
+Register User
+POST /register
+Request Body:
+name: User name
+email: User email (must be unique)
+password: User password (hashed and salted before storage)
+role: User role (default: "user")
+Response: JSON Web Token (JWT)
+Login User
+POST /login
+Request Body:
+email: User email
+password: User password
+Response: JSON Web Token (JWT)
+Logout User
+GET /logout
+Response: Success message
+Get User Details
+GET /me
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: User details
+Update User Password
+PUT /password/update
+Request Body:
+password: New password
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: Success message
+Update User Profile
+PUT /me/update
+Request Body:
+name: New name
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: Success message
+Get All Users (Admin only)
+GET /admin/users
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: Array of all user details
+Get Single User (Admin only)
+GET /admin/user/:id
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: User details
+Update User Role (Admin only)
+PUT /admin/user/:id
+Request Body:
+role: New role
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: Success message
+Delete User (Admin only)
+DELETE /admin/user/:id
+Headers:
+Authorization: JSON Web Token (JWT)
+Response: Success message
+Implementation
+Express.js
+MongoDB
+JSON Web Tokens (JWT)
+Bcrypt for password hashing
+Role-based authorization
+Prerequisites
+Node.js and npm installed
+MongoDB database
+Environment variables for JWT secret and MongoDB URI
+Installation
+Clone the repository
+bash
+Copy code
+git clone https://github.com/[user]/[repo].git
+Install dependencies
+Copy code
+npm install
+Start the server
+sql
+Copy code
+npm start
+Usage
+The API can be used with a REST client such as
