@@ -1,9 +1,10 @@
 // const nodeMailer = require('nodemailer');
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey("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");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(
+    "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"
+);
 
 const sendEmail = async (options) => {
-
     // const transporter = nodeMailer.createTransport({
     //     host: process.env.SMTP_HOST,
     //     port: process.env.SMTP_PORT,
@@ -25,15 +26,18 @@ const sendEmail = async (options) => {
 
     const msg = {
         to: options.email,
-        from: 'websitedeployer@gmail.com',
+        from: "websitedeployer@gmail.com",
         templateId: options.templateId,
         dynamic_template_data: options.data,
-    }
-    sgMail.send(msg).then(() => {
-        console.log('Email Sent')
-    }).catch((error) => {
-        console.error(error)
-    });
+    };
+    sgMail
+        .send(msg)
+        .then(() => {
+            console.log("Email Sent");
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 };
 
 module.exports = sendEmail;
