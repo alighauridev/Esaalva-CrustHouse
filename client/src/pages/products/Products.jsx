@@ -12,12 +12,13 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import TextArea from "antd/lib/input/TextArea";
 
 const Products = () => {
   const dispatch = useDispatch();
   const [productData, setProductData] = useState([]);
   const [popModal, setPopModal] = useState(false);
-  const [editProduct, setEditProduct] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
   const [category, setCategory] = useState("Category");
   const [branch, setBranch] = useState("Branch");
   const getAllProducts = async () => {
@@ -137,13 +138,13 @@ const Products = () => {
   ];
 
   const handlerSubmit = async (value) => {
-    //console.log(value);
+    console.log(value);
     if (editProduct === null) {
       try {
         dispatch({
           type: "SHOW_LOADING",
         });
-        const res = await axios.post("/api/products/addproducts", value);
+        const res = await axios.post("/api/v1/products", value);
         message.success("Product Added Successfully!");
         getAllProducts();
         setPopModal(false);
@@ -247,19 +248,16 @@ const Products = () => {
             initialValues={editProduct}
             onFinish={handlerSubmit}
           >
-            <FormItem name="name" label="Name">
+            <FormItem name="name" label="Name" required>
               <Input />
             </FormItem>
-            <Form.Item name="category" label="Category">
-              {/* <Select>
-                <Select.Option value="pizzas">Pizzas</Select.Option>
-                <Select.Option value="burgers">Burgers</Select.Option>
-                <Select.Option value="drinks">Drinks</Select.Option>
-              </Select> */}
+            <FormItem name="description" label="Description" required>
+              <TextArea />
+            </FormItem>
+            <Form.Item name="category" label="Category" required>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={category}
                 label="Category"
                 style={{
                   width: "100%",
@@ -267,7 +265,6 @@ const Products = () => {
                   fontSize: "14px",
                   border: "1px solid #d9d9d90a",
                 }}
-                onChange={(e) => handleChange(e, "Category")}
               >
                 <MenuItem value={"Pasta"}>Pasta</MenuItem>
                 <MenuItem value={"Burgers"}>Burgers</MenuItem>
@@ -275,11 +272,28 @@ const Products = () => {
                 <MenuItem value={"Salads"}>Salads</MenuItem>
               </Select>
             </Form.Item>
-            <FormItem name="price" label="Price">
-              <Input />
+            <Form.Item name="branch" label="Branches" required>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Category"
+                style={{
+                  width: "100%",
+                  height: "36px",
+                  fontSize: "14px",
+                  border: "1px solid #d9d9d90a",
+                }}
+              >
+                <MenuItem value={"Lahore"}>Lahore</MenuItem>
+                <MenuItem value={"Bhakkar"}>Bhakkar</MenuItem>
+                <MenuItem value={"Islamabad"}>Islamabad</MenuItem>
+              </Select>
+            </Form.Item>
+            <FormItem name="price" label="Price" required>
+              <Input type="number" />
             </FormItem>
-            <FormItem name="image" label="Image URL">
-              <Input />
+            <FormItem name="stock" label="Stock" required>
+              <Input type="number" />
             </FormItem>
             <div className="form-btn-add">
               <Button htmlType="submit" className="add-new">
