@@ -50,9 +50,7 @@ const Products = () => {
       dispatch({
         type: "SHOW_LOADING",
       });
-      await axios.post("/api/products/deleteproducts", {
-        productId: record._id,
-      });
+      await axios.delete(`/api/v1/products/${record._id}`);
       message.success("Product Deleted Successfully!");
       getAllProducts();
       setPopModal(false);
@@ -165,7 +163,6 @@ const Products = () => {
         });
         await axios.put(`/api/v1/products/${editProduct._id}`, {
           ...value,
-          productId: editProduct._id,
         });
         message.success("Product Updated Successfully!");
         getAllProducts();

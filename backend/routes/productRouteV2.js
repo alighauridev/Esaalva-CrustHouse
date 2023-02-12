@@ -67,6 +67,28 @@ router.put("/:id", async (req, res) => {
         res.status(500);
     }
 });
+// delete a product
+router.delete('/:id', async (req, res) => {
+    try {
+        const product = await Product.findByIdAndRemove(req.params.id);
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                message: 'Product not found'
+            });
+        }
+        res.send({
+            success: true,
+            message: 'Product deleted successfully'
+        });
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
 
 // Get products by branch
 router.get("/branch/:branch", async (req, res) => {
