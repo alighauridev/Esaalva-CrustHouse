@@ -16,7 +16,11 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        res.json(product);
+        const relatedProducts = await Product.find({ category: product.category });
+        res.json({
+            product,
+            relatedProducts
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -28,7 +32,7 @@ router.post("/", async (req, res) => {
         name: req.body.name,
         id: req.body.id,
         category: req.body.category,
-        // img: req.body.img,
+        img: req.body.img,
         price: req.body.price,
         stock: req.body.stock,
         branch: req.body.branch,

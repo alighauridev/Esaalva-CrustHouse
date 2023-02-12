@@ -118,13 +118,13 @@ const Products = () => {
         </div>
       ),
     },
-    // {
-    //   title: "Image",
-    //   dataIndex: "image",
-    //   render: (image, record) => (
-    //     <img src={image} alt={record.name} height={60} width={60} />
-    //   ),
-    // },
+    {
+      title: "Image",
+      dataIndex: "image",
+      render: (image, record) => (
+        <img src={image} alt={record.name} height={60} width={60} />
+      ),
+    },
     {
       title: "Branches",
       dataIndex: "branch",
@@ -205,6 +205,7 @@ const Products = () => {
               <MenuItem value={"Pasta"}>Pasta</MenuItem>
               <MenuItem value={"Burgers"}>Burgers</MenuItem>
               <MenuItem value={"Entrees"}>Entrees</MenuItem>
+              <MenuItem value={"Pizza"}>Pizza</MenuItem>
               <MenuItem value={"Salads"}>Salads</MenuItem>
             </Select>
           </FormControl>
@@ -291,6 +292,9 @@ const Products = () => {
             </FormItem>
             <FormItem name="stock" label="Stock" required>
               <Input type="number" />
+            </FormItem>
+            <FormItem name="image" label="Image" required>
+              <Input />
             </FormItem>
             <div className="form-btn-add">
               <Button htmlType="submit" className="add-new">
