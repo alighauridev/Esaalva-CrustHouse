@@ -1,7 +1,7 @@
 // const nodeMailer = require('nodemailer');
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(
-    "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"
+    "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"
 );
 
 const sendEmail = async (options) => {
@@ -26,7 +26,7 @@ const sendEmail = async (options) => {
 
     const msg = {
         to: options.email,
-        from: "websitedeployer@gmail.com",
+        from: "alighouridev@gmail.com",
         templateId: options.templateId,
         dynamic_template_data: options.data,
     };
