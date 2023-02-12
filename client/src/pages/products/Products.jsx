@@ -101,25 +101,25 @@ const Products = () => {
       title: "Price",
       dataIndex: "price",
     },
-    // {
-    //   title: "Action",
-    //   dataIndex: "_id",
-    //   render: (id, record) => (
-    //     <div>
-    //       <DeleteOutlined
-    //         className="cart-action"
-    //         onClick={() => handlerDelete(record)}
-    //       />
-    //       <EditOutlined
-    //         className="cart-edit"
-    //         onClick={() => {
-    //           setEditProduct(record);
-    //           setPopModal(true);
-    //         }}
-    //       />
-    //     </div>
-    //   ),
-    // },
+    {
+      title: "Action",
+      dataIndex: "_id",
+      render: (id, record) => (
+        <div>
+          <DeleteOutlined
+            className="cart-action"
+            onClick={() => handlerDelete(record)}
+          />
+          <EditOutlined
+            className="cart-edit"
+            onClick={() => {
+              setEditProduct(record);
+              setPopModal(true);
+            }}
+          />
+        </div>
+      ),
+    },
     // {
     //   title: "Image",
     //   dataIndex: "image",
@@ -163,7 +163,7 @@ const Products = () => {
         dispatch({
           type: "SHOW_LOADING",
         });
-        await axios.put("/api/products/updateproducts", {
+        await axios.put(`/api/v1/products/${editProduct._id}`, {
           ...value,
           productId: editProduct._id,
         });
