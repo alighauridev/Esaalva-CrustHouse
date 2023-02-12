@@ -23,7 +23,7 @@ const sendEmail = async (options) => {
     // };
 
     // await transporter.sendMail(mailOptions);
-
+    // esalv
     const msg = {
         to: options.email,
         from: "alighouridev@gmail.com",
