@@ -4,14 +4,14 @@ dotenv.config();
 mongoose.set('strictQuery', true)
 const connectDatabase = () => {
     mongoose
-        .connect('mongodb+srv://admin:flipcart$7@flipcart.6irf4r8.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+        .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             console.log("Mongoose Connected");
         });
 };
 
 // const connectDatabase = () => {
-//     mongoose.connect('mongodb+srv://admin:flipcart$7@flipcart.6irf4r8.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true });
+//     mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 
 //     const db = mongoose.connection;
 

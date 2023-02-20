@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@300;400;500;600;700;800;900&family=Karla:wght@200;300;400;500;600;700;800&family=Oswald:wght@200;300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+/* font-family: 'Fredoka One',
+cursive;
+font-family: 'Inter',
+sans-serif;
+font-family: 'Karla',
+sans-serif;
+font-family: 'Oswald',
+sans-serif;
+font-family: 'Space Grotesk',
+sans-serif; */
+@font-face {
+  font-family: resteraunt;
+  src: url(./scss/font/CafeFrancoise-EapP9.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: resteraunt, sans-serif ;
+  list-style: none;
+  color: #fff;
+}
+
+body {
+  background: #000;
+  background-image: url(./assets/banner.jpg
+  );
+  background-size: cover;
+}
+
+p.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
+}
+div#panel1d-header p {
+    font-family: 'resteraunt';
+      font-size: 1.5rem !important;
+      font-weight: 300 !important;
+}
+.css-1c2jsgh-MuiButtonBase-root-MuiAccordionSummary-root .MuiAccordionSummary-content {
+  margin: 7px 0px !important;
+
+
+}
+
+.menu .grid .item ul li span {
+  color: #ff950c;
+  font-family: 'Oswald';
+}

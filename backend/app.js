@@ -5,29 +5,36 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const errorMiddleware = require("./middlewares/error");
-const product = require("./routes/productRouteV2");
+const restaurant = require("./routes/restaurantRoute");
+const menu = require("./routes/menuRoute");
+const item = require("./routes/productRoute");
+const category = require("./routes/categoryRoute");
+// const product = require("./routes/productRouteV2");
 const app = express();
-dotenv.config({ path: "./.env" });
-// config
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config({ path: 'backend/config/config.env' });
-// }
 
+dotenv.config({ path: 'backend/.env' });
+
+
+// dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
-const user = require("./routes/userRoute");
+// const user = require("./routes/userRoute");
 // const product = require('./routes/productRoute');
 // const order = require('./routes/orderRoute');
 // const payment = require('./routes/paymentRoute');
-
-app.use("/api/v1/", user);
-app.use("/api/v1/products", product);
+console.log(process.env.MONGO_URI);
+// app.use("/api/v1/", user);
+// app.use("/api/v1/products", product);
 // app.use('/api/v1', product);
 // app.use('/api/v1', order);
 // app.use('/api/v1', payment);
+app.use('/api/v1/restaurant', restaurant);
+app.use('/api/v1/category', category);
+app.use('/api/v1/menu', menu);
+app.use('/api/v1/item', item);
 
 // deployment
 __dirname = path.resolve();

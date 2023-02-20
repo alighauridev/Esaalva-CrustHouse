@@ -76,6 +76,7 @@ const SingleProduct = () => {
                                 </div>
                                 <div className="rating"> </div>
                             </div>
+                            <h3>Related Items:</h3>
                             <div className="quantity">
                                 <div className="qty">
                                     {relatedProducts

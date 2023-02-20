@@ -20,7 +20,9 @@ const Products = () => {
   const [popModal, setPopModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [category, setCategory] = useState("Category");
+  const [categories, setCategories] = useState([]);
   const [branch, setBranch] = useState("Branch");
+  const [restaurant, setRestaurant] = useState({});
   const getAllProducts = async () => {
     try {
       dispatch({
@@ -41,9 +43,9 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
+  // useEffect(() => {
+  //   getAllProducts();
+  // }, []);
 
   const handlerDelete = async (record) => {
     try {
@@ -136,13 +138,17 @@ const Products = () => {
   ];
 
   const handlerSubmit = async (value) => {
-    console.log(value);
     if (editProduct === null) {
       try {
         dispatch({
           type: "SHOW_LOADING",
         });
-        const res = await axios.post("/api/v1/products", value);
+        const { data } = await axios.get("/api/v1/restaurant");
+        // console.log(data.menu._id);
+        const res = await axios.post("/api/v1/item", {
+          ...value,
+          menu: data.menu._id,
+        });
         message.success("Product Added Successfully!");
         getAllProducts();
         setPopModal(false);
@@ -180,6 +186,11 @@ const Products = () => {
     }
   };
 
+  useEffect(async () => {
+    const { data } = await axios.get("/api/v1/category");
+    setCategories(data);
+  }, []);
+
   return (
     <LayoutApp>
       <h2>All Products </h2>
@@ -202,11 +213,9 @@ const Products = () => {
               label="Category"
               onChange={(e) => handleChange(e, "Category")}
             >
-              <MenuItem value={"Pasta"}>Pasta</MenuItem>
-              <MenuItem value={"Burgers"}>Burgers</MenuItem>
-              <MenuItem value={"Entrees"}>Entrees</MenuItem>
-              <MenuItem value={"Pizza"}>Pizza</MenuItem>
-              <MenuItem value={"Salads"}>Salads</MenuItem>
+              {categories.map((cat, ind) => {
+                return <MenuItem value={cat.name}>{cat.name}</MenuItem>;
+              })}
             </Select>
           </FormControl>
         </Box>
@@ -264,35 +273,18 @@ const Products = () => {
                   border: "1px solid #d9d9d90a",
                 }}
               >
-                <MenuItem value={"Pasta"}>Pasta</MenuItem>
-                <MenuItem value={"Burgers"}>Burgers</MenuItem>
-                <MenuItem value={"Entrees"}>Entrees</MenuItem>
-                <MenuItem value={"Salads"}>Salads</MenuItem>
+                {categories.map((cat, ind) => {
+                  return <MenuItem value={cat.name}>{cat.name}</MenuItem>;
+                })}
               </Select>
             </Form.Item>
-            <Form.Item name="branch" label="Branches" required>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Category"
-                style={{
-                  width: "100%",
-                  height: "36px",
-                  fontSize: "14px",
-                  border: "1px solid #d9d9d90a",
-                }}
-              >
-                <MenuItem value={"Lahore"}>Lahore</MenuItem>
-                <MenuItem value={"Bhakkar"}>Bhakkar</MenuItem>
-                <MenuItem value={"Islamabad"}>Islamabad</MenuItem>
-              </Select>
-            </Form.Item>
+
             <FormItem name="price" label="Price" required>
               <Input type="number" />
             </FormItem>
-            <FormItem name="stock" label="Stock" required>
+            {/* <FormItem name="stock" label="Stock" required>
               <Input type="number" />
-            </FormItem>
+            </FormItem> */}
             <FormItem name="image" label="Image" required>
               <Input />
             </FormItem>

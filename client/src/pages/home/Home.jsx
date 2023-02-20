@@ -4,12 +4,13 @@ import LayoutApp from "../../components/Layout";
 import { Row, Col } from "antd";
 import Product from "../../components/Product";
 import { useDispatch } from "react-redux";
-
+import salad from "../../assets/images/salaad.png";
+import noodles from "../../assets/images/noodles.png";
 const Home = () => {
   const dispatch = useDispatch();
 
   const [productData, setProductData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Burgers");
+  const [selectedCategory, setSelectedCategory] = useState("Pizza");
   const [selectedBranch, setSelectedBranch] = useState("Lahore");
 
   const categories = [
@@ -25,13 +26,11 @@ const Home = () => {
     },
     {
       name: "Pasta",
-      imageUrl:
-        "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+      imageUrl: noodles,
     },
     {
       name: "Salads",
-      imageUrl:
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+      imageUrl: salad,
     },
 
     {
@@ -65,27 +64,22 @@ const Home = () => {
   return (
     <LayoutApp>
       <div className="category">
-        {branches.map((branch, i) => (
+        {categories.map((cat, i) => (
           <div
             key={i}
             className={`categoryFlex ${
-              selectedBranch === branch && "category-active"
+              selectedCategory === cat.name && "category-active"
             }`}
-            onClick={() => setSelectedBranch(branch)}
+            onClick={() => setSelectedCategory(cat.name)}
           >
-            <h3 className="categoryName">{branch}</h3>
-            {/* <img
-              src={category.imageUrl}
-              alt={category.name}
-              height={60}
-              width={60}
-            /> */}
+            <h3 className="categoryName">{cat.name}</h3>
+            <img src={cat.imageUrl} alt={cat.name} height={60} width={60} />
           </div>
         ))}
       </div>
       <Row>
         {productData
-          .filter((i) => i.branch === selectedBranch)
+          .filter((i) => i.category === selectedCategory)
           .map((product) => {
             return (
               <Col xs={24} sm={6} md={12} lg={6}>

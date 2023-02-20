@@ -3,14 +3,14 @@ const router = express.Router();
 const Product = require("../models/ProductTextModel");
 
 // Get all products
-router.get("/", async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.json(products);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// router.get("/", async (req, res) => {
+//     try {
+//         const products = await Product.find();
+//         res.json(products);
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+// });
 
 // Get a single product
 router.get("/:id", async (req, res) => {
@@ -112,5 +112,30 @@ router.get("/category/:category", async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+// Get the Menu
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find({});
+        const categories = [...new Set(products.map((product) => product.category))];
+
+        const menu = categories.map((category) => {
+            const filteredProducts = products.filter((product) => product.category === category);
+            return {
+                category,
+                image: filteredProducts[0].image,
+                products: filteredProducts,
+            };
+        });
+
+        res.json(menu);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+
+
 
 module.exports = router;

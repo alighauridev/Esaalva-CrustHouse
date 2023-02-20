@@ -4,7 +4,7 @@ const {
     loginUser,
     logoutUser,
     getUserDetails,
-    forgotPassword,
+    // forgotPassword,
     resetPassword,
     updatePassword,
     updateProfile,
@@ -22,7 +22,7 @@ router.route("/login").post(loginUser);
 router.route("/logout").get(logoutUser);
 router.route("/me").get(isAuthenticatedUser, getUserDetails);
 
-router.route("/password/forgot").post(forgotPassword);
+// router.route("/password/forgot").post(forgotPassword);
 router.route("/password/reset/:token").put(resetPassword);
 
 router.route("/password/update").put(isAuthenticatedUser, updatePassword);

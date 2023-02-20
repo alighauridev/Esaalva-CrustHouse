@@ -1,6 +1,7 @@
 const app = require("./app");
 const connectDatabase = require("./config/database");
 const cloudinary = require("cloudinary");
+const populate = require("./generateData");
 const PORT = process.env.PORT || 5000;
 
 // UncaughtException Error
@@ -9,7 +10,7 @@ process.on("uncaughtException", (err) => {
     process.exit(1);
 });
 connectDatabase();
-
+// populate()
 cloudinary.config({
     cloud_name: "dipcjbjho",
     api_key: "884152813132763",

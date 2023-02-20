@@ -1,0 +1,81 @@
+import React from "react";
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+
+const Accordion = styled((props) => (
+    <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+    border: `1px solid ${theme.palette.divider}`,
+    "&:not(:last-child)": {
+        borderBottom: 0,
+    },
+    "&:before": {
+        display: "none",
+    },
+}));
+
+const AccordionSummary = styled((props) => (
+    <MuiAccordionSummary
+        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+        {...props}
+    />
+))(({ theme }) => ({
+    backgroundColor: !theme.palette.mode === "dark" ? "#ff8c00" : "#ff8c00",
+    fontFamily: "'Oswald'",
+    fontSize: "1.5rem",
+    flexDirection: "row-reverse",
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+        transform: "rotate(90deg)",
+    },
+    "& .MuiAccordionSummary-content": {
+        marginLeft: theme.spacing(1),
+    },
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+    padding: theme.spacing(2),
+    borderTop: "1px solid #ff8c00",
+    background: "#000",
+}));
+const MenuItem = ({ item }) => {
+    const [expanded, setExpanded] = React.useState("panel1");
+
+    const handleChange = (panel) => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+    };
+    const navigate = useNavigate()
+    return (
+        <>
+            <div className="item">
+                <div className="img">
+                    <img src={item.category.image} alt="" />
+                </div>
+                <Accordion onChange={handleChange("panel1")}>
+                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                        <Typography>{item.category.name}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>
+                            <ul>
+                                {item.products.map((product, ind) => {
+                                    return (
+                                        <li onClick={() => navigate(`/${product._id}`)}>
+                                            <p>{product.name}</p> <span>${product.price}</span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+            </div>
+        </>
+    );
+};
+
+export default MenuItem;
