@@ -6,11 +6,14 @@ import { data } from "../assets/data";
 const Menu = () => {
     const [productData, setProductData] = useState([]);
     const [filterData, setfilterData] = useState([]);
+    const [categories, setCategories] = useState([])
+    const [menuType, setMenuType] = useState([])
+    const [menu, setMenu] = useState();
     const getAllProducts = async () => {
         try {
-            const { data } = await axios.get("/api/v1/menu");
+            const { data } = await axios.get("/api/v1/foodpoints/63f4d70e88b6eaa37ff01664");
             console.log(data);
-            setProductData(data);
+            setProductData(data.filterProducts);
         } catch (error) {
             console.log(error);
         }
@@ -27,7 +30,7 @@ const Menu = () => {
             </div>
             <div className="container">
                 <div className="grid">
-                    {data.map((item, index) => {
+                    {productData.map((item, index) => {
                         return <MenuItem id={index} item={item} />;
                     })}
                 </div>

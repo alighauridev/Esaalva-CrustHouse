@@ -5,10 +5,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const errorMiddleware = require("./middlewares/error");
-const restaurant = require("./routes/restaurantRoute");
-const menu = require("./routes/menuRoute");
-const item = require("./routes/productRoute");
-const category = require("./routes/categoryRoute");
+const allroutes = require("./routes/allRoutes");
+
 // const product = require("./routes/productRouteV2");
 const app = express();
 
@@ -31,10 +29,10 @@ console.log(process.env.MONGO_URI);
 // app.use('/api/v1', product);
 // app.use('/api/v1', order);
 // app.use('/api/v1', payment);
-app.use('/api/v1/restaurant', restaurant);
-app.use('/api/v1/category', category);
-app.use('/api/v1/menu', menu);
-app.use('/api/v1/item', item);
+// app.use('/api/v1/restaurant', restaurant);
+// app.use('/api/v1/category', category);
+// app.use('/api/v1/menu', menu);
+app.use('/api/v1', allroutes);
 
 // deployment
 __dirname = path.resolve();

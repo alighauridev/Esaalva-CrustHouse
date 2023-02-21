@@ -1,11 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const menuSchema = new mongoose.Schema({
-
-    restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
-    items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }]
+const menuSchema = new Schema({
+    foodPoint: {
+        type: Schema.Types.ObjectId,
+        ref: "FoodPoint",
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+    },
+    menuTypes: [{ type: String, required: true }],
+    categories: [{ type: String, required: true }],
+    items: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "MenuItem",
+        },
+    ],
 });
 
-const Menu = mongoose.model('Menu', menuSchema);
-
-module.exports = Menu;
+module.exports = mongoose.model("Menu", menuSchema);

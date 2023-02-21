@@ -53,22 +53,26 @@ const MenuItem = ({ item }) => {
         <>
             <div className="item">
                 <div className="img">
-                    <img src={item.category.image} alt="" />
+                    <img src={item.products.length > 0 ? item?.products[0]?.image : "https://images.unsplash.com/photo-1596665338750-dcb6aacff410?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aW1hZ2UlMjBub3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"} alt="" />
                 </div>
                 <Accordion onChange={handleChange("panel1")}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                        <Typography>{item.category.name}</Typography>
+                        <Typography>{item.type}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
                             <ul>
-                                {item.products.map((product, ind) => {
-                                    return (
-                                        <li onClick={() => navigate(`/${product._id}`)}>
-                                            <p>{product.name}</p> <span>${product.price}</span>
-                                        </li>
-                                    );
-                                })}
+                                {
+                                    item.products.length > 0 ? <>
+                                        {item.products.map((product, ind) => {
+                                            return (
+                                                <li onClick={() => navigate(`/${product._id}`)}>
+                                                    <p>{product.name}</p> <span>${product.price}</span>
+                                                </li>
+                                            );
+                                        })}
+                                    </> : <li>No Items Available</li>
+                                }
                             </ul>
                         </Typography>
                     </AccordionDetails>
