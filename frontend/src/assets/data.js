@@ -333,3 +333,27 @@ export const data = [
     }
 
 ]
+export const nav = [
+    {
+        name: 'Home',
+        path: 'home#about',
+        ref: 'nav2',
+    },
+    {
+        name: 'Menu',
+        path: 'home#roadmap',
+        ref: 'nav1',
+    },
+
+    {
+        name: 'Account ',
+        path: 'home#partner',
+        ref: 'nav4',
+    },
+
+    {
+        name: 'Orders',
+        path: 'home#faq',
+        ref: 'nav4',
+    },
+]

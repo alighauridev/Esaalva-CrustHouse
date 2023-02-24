@@ -2,108 +2,138 @@ const Restaurant = require('./models/restaurantModel');
 const Menu = require('./models/menuModel');
 const Item = require('./models/productModel');
 const Category = require('./models/categoryModel');
-const products = [
+const MenuItem = require('./models/MenuItemModel');
+const menuItemData = [
     {
-        "name": "Tuna Salad",
-        "description": "Fresh greens, tuna, egg, tomato, and onion with balsamic vinaigrette",
-        "price": "10",
-        "type": "Lunch",
-        "category": "Pizza",
-        "image": "https://images.unsplash.com/photo-1649925548772-3dbd70852613?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2FsbGFkfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Omelette",
-        "description": "Three egg omelette with your choice of cheese, veggies, and meat",
-        "price": "9",
-        "type": "Breakfast",
-        "category": "Pizza",
-        "image": "https://images.unsplash.com/photo-1510693206972-df098062cb71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8T21lbGV0dGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Quesadilla",
-        "description": "Grilled chicken or steak with melted cheese, peppers, and onions",
-        "price": "11",
-        "type": "Lunch",
-        "category": "Burger",
-        "image": "https://images.unsplash.com/photo-1618040996337-56904b7850b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8UXVlc2FkaWxsYXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Hummus and Pita",
-        "description": "Homemade hummus with fresh pita bread",
-        "price": "8",
-        "type": "Snacks",
-        "category": "Burger",
-        "image": "https://images.unsplash.com/photo-1542444256-164bd32f11fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8SHVtbXVzJTIwYW5kJTIwUGl0YXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Strawberry Smoothie",
-        "description": "Fresh strawberries blended with ice and yogurt",
-        "price": "6",
-        "type": "Shakes",
-        "category": "Sandwich",
-        "image": "https://images.unsplash.com/photo-1514994960127-ed3ef9239d11?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8U3RyYXdiZXJyeSUyMFNtb290aGllfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Orange Juice",
-        "description": "Fresh squeezed orange juice",
-        "price": "4",
-        "type": "Juices",
-        "category": "Sandwich",
-        "image": "https://plus.unsplash.com/premium_photo-1667543228378-ec4478ab2845?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8T3JhbmdlJTIwSnVpY2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Chocolate Ice Cream",
-        "description": "Rich and creamy chocolate ice cream",
-        "price": "5",
-        "type": "Ice cream",
-        "category": "Salad",
-        "image": "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Q2hvY29sYXRlJTIwSWNlJTIwQ3JlYW18ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
-    }
-    ,
-    {
-        "name": "Coca-Cola",
-        "description": "Classic Coca-Cola in a chilled bottle",
-        "price": "3",
-        "type": "Soft drinks",
-        "category": "Salad",
-        "image": "https://images.unsplash.com/photo-1554866585-cd94860890b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Q29jYSUyMENvbGF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
+        name: 'Pepperoni Pizza',
+        description: 'Classic pizza topped with pepperoni and mozzarella cheese',
+        price: 12.99,
+        type: 'Dinner',
+        category: 'Pizza',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://plus.unsplash.com/premium_photo-1672498294724-dde3b2e41e19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8UGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
     },
-
     {
-        "name": "Espresso",
-        "description": "Strong and rich espresso shot",
-        "price": "2",
-        "type": "Coffee",
-        "category": "Soup",
-        "image": "https://images.unsplash.com/photo-1610889556528-9a770e32642f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8RXNwcmVzc298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
+        name: 'Spicy Chicken Burger',
+        description: 'Juicy chicken burger with a spicy twist',
+        price: 8.99,
+        type: 'Lunch',
+        category: 'Burger',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YnVyZ2VyJTIwYW5kJTIwZnJpZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
     },
-
     {
-        "name": "Green Tea",
-        "description": "Loose leaf green tea brewed to perfection",
-        "price": "3",
-        "type": "Tea",
-        "category": "Soup",
-        "image": "https://images.unsplash.com/photo-1582650859079-ee63913ecb84?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8R3JlZW4lMjBUZWF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        "menu": "63f4d8be4f6adaaa0746e007"
+        name: 'Tuna Sandwich',
+        description: 'Sandwich made with fresh tuna and vegetables',
+        price: 7.99,
+        type: 'Lunch',
+        category: 'Sandwich',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1540713434306-58505cf1b6fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8U2FuZHdpY2h8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Greek Salad',
+        description: 'Salad made with mixed greens, feta cheese, olives, and tomatoes',
+        price: 9.99,
+        type: 'Lunch',
+        category: 'Salad',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8U2FsYWR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Tomato Soup',
+        description: 'Warm and comforting tomato soup',
+        price: 5.99,
+        type: 'Lunch',
+        category: 'Soup',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1604152135912-04a022e23696?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8U291cHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Vanilla Milkshake',
+        description: 'Classic vanilla milkshake made with real ice cream',
+        price: 4.99,
+        type: 'Shakes',
+        category: 'Shakes',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1553787499-6f9133860278?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8U2hha2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Green Juice',
+        description: 'Healthy juice made with kale, apple, and lemon',
+        price: 6.99,
+        type: 'Juices',
+        category: 'Juices',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://plus.unsplash.com/premium_photo-1667251757355-b3db687473bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SnVpY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Chocolate Ice Cream',
+        description: 'Rich and creamy chocolate ice cream',
+        price: 3.99,
+        type: 'Ice cream',
+        category: 'Ice cream',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1560008581-09826d1de69e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8SWNlJTIwY3JlYW18ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Coca-Cola',
+        description: 'Classic Coca-Cola in a cold glass bottle',
+        price: 1.99,
+        type: 'Soft drinks',
+        category: 'Soft drinks',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8SnVpY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+        name: 'Cappuccino',
+        description: 'Classic Italian coffee drink made with espresso and steamed milk',
+        price: 3.99,
+        type: 'Coffee',
+        category: 'Coffee',
+        menu: '63f6853d02bc7d4985edef88',
+        image: "https://images.unsplash.com/photo-1518057111178-44a106bad636?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Q29mZmVlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
     }
 ]
 
+// const populate = async () => {
+//     try {
+//         // get the menu to associate with the items
+//         const menu = await Menu.findOne({
+//             _id: "63f6853d02bc7d4985edef88",
+//             image: ""
+//         });
+
+//         // create menu item documents
+//         for (const item of menuItemData) {
+//             const menuItem = new MenuItem({ ...item });
+//             await menuItem.save();
+
+//             menu.items.push(menuItem._id);
+//         }
+
+//         // save the updated menu document
+//         await menu.save();
+
+//         console.log("Menu items created successfully!", menu);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// };
+const menuId = '63f6855d02bc7d4985edef8c';
+const foodPointId = '63f67e8855977415944ab382';
+const populate = async () => {
+    try {
+        const result = await MenuItem.updateMany(
+            { menu: menuId },
+            { $set: { foodPoint: foodPointId } }
+        );
+
+        console.log(`${result.nModified} menu items updated`);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 
 module.exports = populate;

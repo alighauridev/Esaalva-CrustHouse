@@ -27,6 +27,10 @@ const menuItemSchema = new Schema({
     menu: {
         type: Schema.Types.ObjectId,
         ref: 'Menu'
+    },
+    foodPoint: {
+        type: Schema.Types.ObjectId,
+        ref: 'FoodPoint'
     }
 });
 

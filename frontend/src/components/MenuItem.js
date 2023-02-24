@@ -48,12 +48,19 @@ const MenuItem = ({ item }) => {
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
     };
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
         <>
             <div className="item">
                 <div className="img">
-                    <img src={item.products.length > 0 ? item?.products[0]?.image : "https://images.unsplash.com/photo-1596665338750-dcb6aacff410?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aW1hZ2UlMjBub3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"} alt="" />
+                    <img
+                        src={
+                            item.products.length > 0
+                                ? item?.products[0]?.image
+                                : "https://images.unsplash.com/photo-1596665338750-dcb6aacff410?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aW1hZ2UlMjBub3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+                        }
+                        alt=""
+                    />
                 </div>
                 <Accordion onChange={handleChange("panel1")}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
@@ -62,17 +69,24 @@ const MenuItem = ({ item }) => {
                     <AccordionDetails>
                         <Typography>
                             <ul>
-                                {
-                                    item.products.length > 0 ? <>
+                                {item.products.length > 0 ? (
+                                    <>
                                         {item.products.map((product, ind) => {
                                             return (
                                                 <li onClick={() => navigate(`/${product._id}`)}>
-                                                    <p>{product.name}</p> <span>${product.price}</span>
+                                                    <div className="start">
+                                                        <img src={product.image} alt="" />
+                                                    </div>
+                                                    <div className="end">
+                                                        <p>{product.name}</p> <span>${product.price}</span>
+                                                    </div>
                                                 </li>
                                             );
                                         })}
-                                    </> : <li>No Items Available</li>
-                                }
+                                    </>
+                                ) : (
+                                    <p>No Items Available</p>
+                                )}
                             </ul>
                         </Typography>
                     </AccordionDetails>

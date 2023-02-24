@@ -7,9 +7,10 @@ import "../components/Main/Main.css";
 import MainLeft from "../components/MainLeft/MainLeft";
 import MainRight from "../components/MainRight/MainRight";
 import { data } from "../assets/data";
+import getDistance from "geolib/es/getDistance";
 const SingleProduct = () => {
     const dispatch = useDispatch();
-
+    const [qi, setQi] = useState([]);
     const [productData, setProductData] = useState({
         image: "",
         price: 0,
@@ -19,36 +20,49 @@ const SingleProduct = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
+    const getAllProducts = async () => {
+        try {
+            const { data } = await axios.get(`/api/v1/menu-item/${id}`);
+            setProductData(data.menuItem);
+            setRelatedProducts(data.uniqueItems);
+            setQi(data.menuItem.foodPoint.gpsCoordinates);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     useEffect(() => {
-        const getAllProducts = async () => {
-            try {
-                const { data } = await axios.get(`/api/v1/menu-item/${id}`);
-                setProductData(data);
-
-                console.log(productData);
-            } catch (error) {
-                console.log(error);
-            }
-
-        };
-
         getAllProducts();
-    }, [dispatch, navigate, id]);
-    //     _id: "123456789012345678901234",
-    //         name: "Beverages",
-    //             image: "https://images.unsplash.com/photo-1496318447583-f524534e9ce1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8QmV2ZXJhZ2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    //                 __v: 0
-    // },
-    //     products: [
-    //         {
-    //             _id: "123456789012345678901236",
-    //             name: "Iced Coffee",
-    //             price: 3.99,
-    //             category: "Beverages",
-    //             description: "Refreshing iced coffee with cream and sugar",
-    //             image: "https://example.com/icedcoffee.jpg",
-    //             __v: 0
-    //         },
+    }, [id]);
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in km
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c; // Distance in km
+        return `${d.toFixed(2)}km`;
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
+    const coord1 = ["31.5204° N", "74.3587° E"];
+    const lat1 = parseFloat(qi[0]);
+    const lon1 = parseFloat(qi[1]);
+
+    const coord2 = ["28.7041° N", "77.1025° E"];
+    const lat2 = parseFloat(coord2[0]);
+    const lon2 = parseFloat(coord2[1]);
+
+    const distance = calculateDistance(lat1, lon1, lat2, lon2);
+    console.log(calculateDistance(lat1, lon1, lat2, lon2)); // Output: 452.77 km
+
     return (
         <>
             <section className="prod__info">
@@ -57,12 +71,7 @@ const SingleProduct = () => {
                         <div className="item">
                             <div className="gallery">
                                 <div className="img">
-                                    <img
-                                        src={
-                                            productData.image
-                                        }
-                                        alt=""
-                                    />
+                                    <img src={productData.image} alt="" />
                                 </div>
                             </div>
                         </div>
@@ -80,41 +89,56 @@ const SingleProduct = () => {
                                 </div>
                                 <div className="price">
                                     <h2>${productData.price}</h2>
+                                    <button>Place Order!</button>
                                 </div>
 
                                 <div className="rating"> </div>
                             </div>
-                            {/* <h3>Related Items:</h3>
+                            <h3
+                                style={{
+                                    fontWeight: "200",
+                                    fontSize: "2rem",
+                                    color: "#fe7d1a",
+                                }}
+                            >
+                                Related Items:
+                            </h3>
                             <div className="quantity">
                                 <div className="qty">
-                                    {relatedProducts
-                                        .filter((i) => i._id !== id)
-                                        .map((item, index) => {
-                                            return (
-                                                <div
-                                                    className="item"
-                                                    onClick={() => navigate(`/${item._id}`)}
-                                                >
-                                                    <div className="img">
-                                                        <img src={item.image} alt="" />
+                                    {relatedProducts?.map((item, index) => {
+                                        return (
+                                            <div
+                                                className="item"
+                                                onClick={() => navigate(`/${item._id}`)}
+                                            >
+                                                <div className="img">
+                                                    <img src={item.image} alt="" />
+                                                </div>
+                                                <div className="details">
+                                                    <div className="top">
+                                                        <h3 className="start">{item.name}</h3>
+                                                        <div className="end">
+                                                            {" "}
+                                                            {calculateDistance(
+                                                                parseFloat(qi[0]),
+                                                                parseFloat(qi[1]),
+                                                                parseFloat(item.foodPoint.gpsCoordinates[0]),
+                                                                parseFloat(item.foodPoint.gpsCoordinates[1])
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    <div className="details">
-                                                        <div className="top">
-                                                            <h3 className="start">{item.name}</h3>
-                                                            <div className="end">{item.branch}</div>
-                                                        </div>
-                                                        <div className="bottom">
-                                                            <div className="start">${item.price}</div>
-                                                            <div className="end"></div>
-                                                        </div>
+                                                    <div className="bottom">
+                                                        <div className="start">${item.price}</div>
+                                                        <div className="end"> {item.foodPoint?.name}</div>
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
 
                                 <div className="buy"></div>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                     <div className="tabs__info">{/* <BasicTabs /> */}</div>

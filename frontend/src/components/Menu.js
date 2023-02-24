@@ -6,13 +6,16 @@ import { data } from "../assets/data";
 const Menu = () => {
     const [productData, setProductData] = useState([]);
     const [filterData, setfilterData] = useState([]);
-    const [categories, setCategories] = useState([])
-    const [menuType, setMenuType] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [menuType, setMenuType] = useState([]);
     const [menu, setMenu] = useState();
+    const [pointName, setPointName] = useState("");
     const getAllProducts = async () => {
         try {
-            const { data } = await axios.get("/api/v1/foodpoints/63f4d70e88b6eaa37ff01664");
-            console.log(data);
+            const { data } = await axios.get(
+                "/api/v1/foodpoints/63f67ded55977415944ab380"
+            );
+            setPointName(data.name);
             setProductData(data.filterProducts);
         } catch (error) {
             console.log(error);
@@ -24,9 +27,9 @@ const Menu = () => {
     }, []);
 
     return (
-        <section className="menu">
+        <section className="menu" id="menu">
             <div className="heading">
-                <h1>OUR MENU</h1>
+                <h1>{pointName} MENU</h1>
             </div>
             <div className="container">
                 <div className="grid">

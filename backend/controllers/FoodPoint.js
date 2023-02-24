@@ -41,7 +41,7 @@ foodPointController.getFoodPointById = async (req, res) => {
                 path: "items",
                 model: "MenuItem"
             }
-        });;
+        });
 
         if (!foodPoint) {
             return res.status(404).send({ message: "Food point not found" });
@@ -57,14 +57,14 @@ foodPointController.getFoodPointById = async (req, res) => {
             };
         })
 
-        res.send({ filterProducts });
+        res.send({ name: foodPoint.name, filterProducts });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 };
 
 foodPointController.updateFoodPoint = async (req, res) => {
-    const { name, location, phone, email, owner } = req.body;
+    const { name, location, phone, email, owner, gpsCoordinates, services } = req.body;
 
     try {
         const foodPoint = await FoodPoint.findByIdAndUpdate(
@@ -73,11 +73,13 @@ foodPointController.updateFoodPoint = async (req, res) => {
                 name,
                 location,
                 phone,
+                gpsCoordinates,
+                services,
                 email,
                 owner,
             },
             { new: true }
-        ).populate("owner");
+        )
 
         if (!foodPoint) {
             return res.status(404).send({ message: "Food point not found" });

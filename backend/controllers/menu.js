@@ -23,7 +23,7 @@ const createMenu = async (req, res) => {
         // Add the menu item to the menu's list of items
         foodPoint.menu = menu._id;
 
-        await FoodPoint.save();
+        await foodPoint.save();
 
         res.json(menu);
     } catch (error) {
@@ -47,7 +47,22 @@ const getMenus = async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 };
-
+const getMenuItemsByCategory = async (req, res) => {
+    const { category } = req.params;
+    try {
+        // const menuItems = await MenuItem.find({ category }).populate('menu');
+        const menuItems = await MenuItem.find({ category }).populate({
+            path: "menu",
+            populate: {
+                path: "foodPoint",
+                model: "FoodPoint",
+            },
+        });
+        res.status(200).json({ menuItems });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 // Create a new menu item
 const createMenuItem = async (req, res) => {
     try {
@@ -98,11 +113,28 @@ const getMenuItems = async (req, res) => {
 };
 const getMenuItemById = async (req, res) => {
     try {
-        // Find all menu items in the database
-        const menuItem = await MenuItem.findById(req.params.id);
+        // Find the menu item in the database by ID and populate its "foodPoint" field with the desired fields from the "FoodPoint" model
+        const menuItem = await MenuItem.findById(req.params.id).populate(
+            "foodPoint",
+            "name gpsCoordinates"
+        );
 
-        // Return the menu items as a JSON response
-        res.json(menuItem);
+        // Find all menu items in the database that have the same category and type as the selected menu item, but exclude the selected menu item itself
+        const similarItems = await MenuItem.find({
+            category: menuItem.category,
+            _id: { $ne: menuItem._id },
+        }).populate("foodPoint", "name gpsCoordinates");
+        const uniqueItems = [];
+        for (const item of similarItems) {
+            const isDuplicate = uniqueItems.some(
+                (uniqueItem) => uniqueItem.name === item.name
+            );
+            if (!isDuplicate) {
+                uniqueItems.push(item);
+            }
+        }
+        // Return the menu item and the similar items as a JSON response
+        res.json({ menuItem, uniqueItems });
     } catch (error) {
         // Handle any errors that occur during the retrieval of the menu items
         console.error(error);
@@ -110,10 +142,31 @@ const getMenuItemById = async (req, res) => {
     }
 };
 
+// exports.getItemById = async (req, res, next) => {
+//     try {
+//         const item = await Item.findById(req.params.id);
+//         if (!item) {
+//             return res.status(404).json({ message: "Item not found" });
+//         }
+//         const similarItems = await Item.find({
+//             $and: [
+//                 { _id: { $ne: item._id } },
+//                 { type: item.type },
+//                 { category: item.category }
+//             ]
+//         }).limit(3);
+
+//         res.status(200).json({ item, similarItems });
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+// };
+
 module.exports = {
     createMenu,
     getMenus,
     createMenuItem,
     getMenuItems,
-    getMenuItemById
+    getMenuItemById,
+    getMenuItemsByCategory,
 };

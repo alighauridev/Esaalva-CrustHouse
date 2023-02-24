@@ -1,5 +1,6 @@
 .menu {
   margin-bottom: 100px;
+  padding: 90px 0;
   .heading {
     h1 {
       font-size: 5rem;
@@ -33,13 +34,25 @@
         gap: 10px;
         li {
           display: grid;
-          grid-template-columns: auto 40px;
+          grid-template-columns: 80px auto;
           align-items: center;
-          gap: 10px;
-          p {
+          gap: 15px;
+          .start {
+            img {
+              width: 80px;
+              object-fit: cover;
+              height: 80px;
+              border-radius: 12px;
+              border: 1px solid #e0e0e047;
+            }
           }
-          span {
-            color: #ff950c;
+          .end {
+            p {
+              font-size: 24px;
+            }
+            span {
+              font-size: 24px;
+            }
           }
         }
       }
