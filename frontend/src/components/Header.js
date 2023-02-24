@@ -4,6 +4,7 @@ import { AiOutlineTwitter } from 'react-icons/ai'
 import { BsChevronUp } from 'react-icons/bs'
 import { FaTiktok } from 'react-icons/fa'
 import { ImCross } from 'react-icons/im'
+import { Link } from 'react-router-dom'
 import { nav } from '../assets/data'
 import '../scss/navigation.scss'
 const Header = () => {
@@ -105,9 +106,9 @@ const Header = () => {
                                     {nav.map((ite, ind) => {
                                         return (
                                             <li key={ind} className='list-item'>
-                                                <a href={ite.path}>
+                                                <Link to={ite.path}>
                                                     {ite.name}
-                                                </a>
+                                                </Link>
                                             </li>
                                         )
                                     })}
