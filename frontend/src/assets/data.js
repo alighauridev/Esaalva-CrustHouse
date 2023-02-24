@@ -336,7 +336,7 @@ export const data = [
 export const nav = [
     {
         name: 'Home',
-        path: 'home#about',
+        path: '/',
         ref: 'nav2',
     },
     {

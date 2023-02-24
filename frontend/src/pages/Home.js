@@ -6,7 +6,6 @@ import "../scss/banner.scss"
 const Home = () => {
     return (
         <>
-            <Header />
             <Banner />
             <Menu />
         </>
