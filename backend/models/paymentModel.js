@@ -1,68 +1,13 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-    resultInfo: {
-        resultStatus: {
-            type: String,
-            required: true
-        },
-        resultCode: {
-            type: String,
-            required: true
-        },
-        resultMsg: {
-            type: String,
-            required: true
-        },
-    },
-    txnId: {
-        type: String,
-        required: true
-    },
-    bankTxnId: {
-        type: String,
-        required: true
-    },
-    orderId: {
-        type: String,
-        required: true
-    },
-    txnAmount: {
-        type: String,
-        required: true
-    },
-    txnType: {
-        type: String,
-        required: true
-    },
-    gatewayName: {
-        type: String,
-        required: true
-    },
-    bankName: {
-        type: String,
-        required: true
-    },
-    mid: {
-        type: String,
-        required: true
-    },
-    paymentMode: {
-        type: String,
-        required: true
-    },
-    refundAmt: {
-        type: String,
-        required: true
-    },
-    txnDate: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+    branch_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch' },
+    order_id: { type: mongoose.Schema.Types.ObjectId, ref: 'SalesOrder' },
+    payment_time: { type: Date, default: Date.now },
+    amount: { type: Number, required: true },
+    status: { type: Number, required: true }
 });
 
-module.exports = mongoose.model("Payment", paymentSchema);
+const Payment = mongoose.model('Payment', paymentSchema);
+
+module.exports = Payment;
