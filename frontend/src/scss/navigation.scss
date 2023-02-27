@@ -12,7 +12,9 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  @include md {
+    display: none;
+  }
   p {
     text-align: center;
     font-size: 1.5rem;
@@ -47,7 +49,7 @@ header {
           justify-self: start;
           font-size: 35px;
           font-family: "Great Vibes", cursive;
-          color: darkorange;
+          color: #fe4038;
           font-weight: 700;
           a {
             display: flex;

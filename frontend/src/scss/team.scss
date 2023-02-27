@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@300;400;500;600;700;800;900&family=Jost:wght@200;300;400;500;600;700;800;900&family=Karla:wght@200;300;400;500;600;700;800&family=Oswald:wght@200;300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+.chef {
+  width: 100%;
+  background: #ececec;
+  padding: 90px 10px;
+  > h1 {
+    font-size: 3rem;
+    padding: 30px;
+    text-align: center;
+    font-weight: 300;
+    color: #212529;
+  }
+}
+
+.chef-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.chef-content .card {
+  border: none;
+}
+
+.chef-content .card:hover i {
+  color: var(--theme-background);
+}
+
+.chef-content .card:hover {
+  border-bottom: 2px solid #ffb808;
+  cursor: pointer;
+}
+/* chef-section-end */
+/* contact-section-start */
+
+.contact-content .form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #fff;
+  border-radius: 0px;
+  color: #fe4038;
+}
+p.text-dark-yellow.fs-6.py-2.text-uppercase {
+  color: #fe4038;
+  font-weight: 500;
+}
+h5.card-title.text-black.text-center.fs-4.mt-3.text-uppercase {
+  margin: 10px 0 0;
+  font-size: 24px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+.contact-content .form-control:focus {
+  box-shadow: none;
+  border-color: var(--theme-background);
+}
+
+.contact-content .btn {
+  border: 2px solid #fff;
+}
+/* contact-section-end */

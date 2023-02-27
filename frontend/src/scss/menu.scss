@@ -3,11 +3,11 @@
   padding: 90px 0;
   .heading {
     h1 {
-      font-size: 5rem;
+      font-size: 3rem;
       padding: 30px;
       text-align: center;
       font-weight: 300;
-      color: darkorange;
+      color: #fe4038;
     }
   }
   .container {
@@ -24,7 +24,7 @@
         margin-bottom: 20px;
         img {
           width: 100%;
-          height: 200px;
+          height: 250px;
           object-fit: cover;
           border-radius: 8px;
         }
@@ -34,24 +34,27 @@
         gap: 10px;
         li {
           display: grid;
-          grid-template-columns: 80px auto;
+          grid-template-columns: 60px auto;
           align-items: center;
           gap: 15px;
           .start {
             img {
-              width: 80px;
+              width: 60px;
               object-fit: cover;
-              height: 80px;
+              height: 60px;
               border-radius: 12px;
               border: 1px solid #e0e0e047;
             }
           }
           .end {
             p {
-              font-size: 24px;
+              font-size: 18px;
+              font-family: "Merienda";
             }
             span {
-              font-size: 24px;
+              font-size: 18px;
+              font-family: "Merienda";
+              color: #fe4038;
             }
           }
         }
@@ -60,11 +63,11 @@
   }
 }
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiAccordion-root.Mui-expanded.css-1fjvggn-MuiPaper-root-MuiAccordion-root {
-  background: #e58a1d !important;
+  background: #8b8b8b !important;
 }
 .css-1fjvggn-MuiPaper-root-MuiAccordion-root {
-  background: #e58a1d !important;
+  background: transparent !important;
   border-radius: 8px;
-  /* border: 1px solid rebeccapurple; */
+  border: 1px solid #fe4038 !important;
   overflow: hidden;
 }

@@ -96,9 +96,11 @@ const SingleProduct = () => {
                             </div>
                             <h3
                                 style={{
-                                    fontWeight: "200",
-                                    fontSize: "2rem",
-                                    color: "#fe7d1a",
+                                    fontWeight: '200',
+                                    fontSize: '2rem',
+                                    color: 'rgb(254, 64, 56)',
+                                    fontFamily: '\'Merienda\'',
+                                    fontSize: '22px'
                                 }}
                             >
                                 Related Items:

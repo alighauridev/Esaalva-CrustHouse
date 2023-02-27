@@ -6,7 +6,7 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -21,7 +21,7 @@ const Accordion = styled((props) => (
 
 const AccordionSummary = styled((props) => (
     <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+        expandIcon={<ExpandMoreIcon sx={{ fontSize: "0.9rem" }} />}
         {...props}
     />
 ))(({ theme }) => ({
