@@ -1,5 +1,6 @@
 import React from "react";
-import "../scss/team.scss"
+import "../scss/team.scss";
+import img from "../assets/OE612O0.jpg";
 const Team = () => {
     return (
         <div className="chef bg-grey">
@@ -22,24 +23,24 @@ const Team = () => {
                                 data-aos-easing="ease-in-out"
                             >
                                 <img
-                                    src="https://tanvir1717.github.io/restaurant/assets/img/chef/chef.jpg"
+                                    src={img}
                                     className="card-img-top rounded-pill mx-auto px-2 mt-3"
                                     alt="..."
                                 />
                                 <div className="card-body">
                                     <h5 className="card-title text-black text-center fs-4 mt-3 text-uppercase">
-                                        John Lady
+                                        Chef Zakir Qureshi
                                     </h5>
                                     <p className="text-dark-yellow fs-6 py-2 text-uppercase">
-                                        co-founder
+                                        Head Chef/Consultant
                                     </p>
                                     <p className="card-text text-black text-center">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Quibusdam assumenda possimus dolor deleniti. Repudiandae
-                                        veritatis ipsum modi maiores, facilis sed.
+                                        Chef Zakir is a well-known Pakistani chef who has been
+                                        hosting cooking shows on television for several years. He is
+                                        known for his expertise in Pakistani cuisine and has
+                                        published several cookbooks.
                                     </p>
                                 </div>
-
                             </div>
                         </div>
                         <div className="col-md-4">
@@ -50,24 +51,24 @@ const Team = () => {
                                 data-aos-easing="ease-in-out"
                             >
                                 <img
-                                    src="https://tanvir1717.github.io/restaurant/assets/img/chef/chef2.jpg"
+                                    src={img}
                                     className="card-img-top rounded-pill mx-auto px-2 mt-3"
                                     alt="..."
                                 />
                                 <div className="card-body">
                                     <h5 className="card-title text-black text-center fs-4 mt-3 text-uppercase">
-                                        John smith
+                                        Chef Anwar
                                     </h5>
                                     <p className="text-dark-yellow fs-6 py-2 text-uppercase">
-                                        co-founder
+                                        Culinary Director
                                     </p>
                                     <p className="card-text text-black text-center">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Quibusdam assumenda possimus dolor deleniti. Repudiandae
-                                        veritatis ipsum modi maiores, facilis sed.
+                                        Chef Anwar is another famous Pakistani chef who has been
+                                        hosting cooking shows for over two decades. She is known for
+                                        her traditional Pakistani recipes and has won several awards
+                                        for her contribution to the culinary world.
                                     </p>
                                 </div>
-
                             </div>
                         </div>
                         <div className="col-md-4">
@@ -78,24 +79,24 @@ const Team = () => {
                                 data-aos-easing="ease-in-out"
                             >
                                 <img
-                                    src="https://tanvir1717.github.io/restaurant/assets/img/chef/chef3.jpg"
+                                    src={img}
                                     className="card-img-top rounded-pill mx-auto px-2 mt-3"
                                     alt="..."
                                 />
                                 <div className="card-body">
                                     <h5 className="card-title text-black text-center fs-4 mt-3 text-uppercase">
-                                        Jenny ma
+                                        Chef Gulzar
                                     </h5>
                                     <p className="text-dark-yellow fs-6 py-2 text-uppercase">
-                                        co-founder
+                                        Executive Chef/Menu Planner
                                     </p>
                                     <p className="card-text text-black text-center">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Quibusdam assumenda possimus dolor deleniti. Repudiandae
-                                        veritatis ipsum modi maiores, facilis sed.
+                                        Chef Gulzar is a renowned Pakistani chef who has worked in
+                                        several leading hotels and restaurants across Pakistan. He
+                                        is known for his unique blend of Pakistani and Continental
+                                        cuisine and has published several cookbooks.
                                     </p>
                                 </div>
-
                             </div>
                         </div>
                     </div>

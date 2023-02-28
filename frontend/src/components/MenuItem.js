@@ -6,7 +6,7 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -62,8 +62,14 @@ const MenuItem = ({ item }) => {
                         alt=""
                     />
                 </div>
-                <Accordion onChange={handleChange("panel1")}>
-                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                <Accordion
+                    expanded={true}
+                    onChange={handleChange(`panel${item._id}`)}
+                >
+                    <AccordionSummary
+                        aria-controls={`panel${item._id}d-content`}
+                        id={`panel${item._id}d-header`}
+                    >
                         <Typography>{item.type}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>

@@ -228,4 +228,21 @@ div#panel1a-header {
 }
 .MuiCollapse-root.MuiCollapse-vertical.MuiCollapse-entered.css-pwcg7p-MuiCollapse-root {
   border-bottom: 1px solid #e0e0e0a1;
+  height: 150px;
+  background: #111111;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #fe4038;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #eee;
+    height: 20px;
+  }
 }

@@ -79,10 +79,12 @@ sans-serif; */
   display: flex;
   min-height: 48px;
   padding: 0px 16px;
-  -webkit-transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  -webkit-transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   background-color: #474747 !important;
-  font-family: 'Oswald';
+  font-family: "Oswald";
   font-size: 1.5rem;
   -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
@@ -109,12 +111,14 @@ h2 {
   font-weight: 700 !important;
 }
 p.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
+      font-family: 'Merienda';
+        font-size: 20px;
 }
 div#panel1d-header p {
-    font-family: 'Merienda';
-      font-size: 1.2rem !important;
-      font-weight: 300 !important;
-      color: #fe4038;
+  font-family: "Merienda";
+  font-size: 1.2rem !important;
+  font-weight: 300 !important;
+  color: #ffffff;
 }
 .css-1c2jsgh-MuiButtonBase-root-MuiAccordionSummary-root
   .MuiAccordionSummary-content {
@@ -126,40 +130,41 @@ div#panel1d-header p {
   font-family: "Oswald";
 }
 .css-1c2jsgh-MuiButtonBase-root-MuiAccordionSummary-root {
-    display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      outline: 0;
-      border: 0;
-      margin: 0;
-      border-radius: 0;
-      padding: 0;
-      cursor: pointer;
-      -webkit-user-select: none;
-      user-select: none;
-      vertical-align: middle;
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      -webkit-text-decoration: none;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      min-height: 48px;
-      padding: 0px 16px;
-      transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-      background-color: #0d0d0d !important;
-      font-family: 'Oswald';
-      font-size: 1.5rem;
-      flex-direction: row-reverse;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  min-height: 48px;
+  padding: 0px 16px;
+  transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #fe4038 !important;
+  font-family: "Oswald";
+  font-size: 1.5rem;
+  flex-direction: row-reverse;
 }
 .css-1646qb7-MuiAccordionDetails-root {
     padding: 8px 16px 16px;
       padding: 16px;
       border-top: 1px solid #fe4038 !important;
-      background: #0d0d0d !important;
+      background: #111111 !important;
 }
 .css-v84d5j-MuiSvgIcon-root {
   -webkit-user-select: none;

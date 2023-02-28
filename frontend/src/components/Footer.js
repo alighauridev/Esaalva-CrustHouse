@@ -44,7 +44,7 @@ const Footer = () => {
                 </div>
             </div>
             <div class="text-dark footer__bottom w-100 text-center">
-                <p class="text-white text-center my-4">Copyright © 2022.All rights reserved <a class="text-warning" href="javascript:void(0)"> esalva</a></p>
+                <p class="text-white text-center my-4">Copyright © 2022.All rights reserved <a class="text-warning" href="javascript:void(0)"> Esalva</a></p>
             </div>
         </footer>
     )

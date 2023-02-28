@@ -34,25 +34,25 @@
         gap: 10px;
         li {
           display: grid;
-          grid-template-columns: 60px auto;
+          grid-template-columns: 50px auto;
           align-items: center;
           gap: 15px;
           .start {
             img {
-              width: 60px;
+              width: 50px;
               object-fit: cover;
-              height: 60px;
+              height: 50px;
               border-radius: 12px;
               border: 1px solid #e0e0e047;
             }
           }
           .end {
             p {
-              font-size: 18px;
+              font-size: 16px;
               font-family: "Merienda";
             }
             span {
-              font-size: 18px;
+              font-size: 15px;
               font-family: "Merienda";
               color: #fe4038;
             }
