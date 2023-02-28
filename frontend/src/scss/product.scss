@@ -90,14 +90,20 @@ html {
               font-size: 35px;
               font-family: "Inter", sans-serif;
             }
-            button {
-              background: #fe4038;
-              padding: 7px 100px;
-              font-size: 24px;
-              border-radius: 10px;
-              color: #040404;
-              cursor: pointer;
+
+            .qty {
+              .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+                border-color: #ffffff3b !important;
+              }
             }
+          }
+          button {
+            background: #fe4038;
+            padding: 7px 100px;
+            font-size: 24px;
+            border-radius: 10px;
+            color: #040404;
+            cursor: pointer;
           }
         }
         > .quantity {
@@ -110,7 +116,11 @@ html {
 
             gap: 10px;
             color: #000;
-
+            .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+              background-color: #000 !important;
+              background: #000 !important;
+              color: rgba(0, 0, 0, 0.87);
+            }
             .item {
               display: grid;
               grid-template-columns: 60px 3.5fr;

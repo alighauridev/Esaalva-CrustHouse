@@ -8,6 +8,12 @@ import MainLeft from "../components/MainLeft/MainLeft";
 import MainRight from "../components/MainRight/MainRight";
 import { data } from "../assets/data";
 import getDistance from "geolib/es/getDistance";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Header from "../components/Header";
+import { addToCart } from "../Redux/actions/cartActions";
 const SingleProduct = () => {
     const dispatch = useDispatch();
     const [qi, setQi] = useState([]);
@@ -17,7 +23,10 @@ const SingleProduct = () => {
         name: "",
     });
     const [relatedProducts, setRelatedProducts] = useState([]);
-
+    const [age, setAge] = React.useState(1);
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
     const { id } = useParams();
     const navigate = useNavigate();
     const getAllProducts = async () => {
@@ -48,7 +57,9 @@ const SingleProduct = () => {
         const d = R * c; // Distance in km
         return `${d.toFixed(2)}km`;
     }
-
+    const addToCartHandler = (item) => {
+        dispatch(addToCart(item._id, age));
+    };
     function deg2rad(deg) {
         return deg * (Math.PI / 180);
     }
@@ -65,6 +76,7 @@ const SingleProduct = () => {
 
     return (
         <>
+            <Header />
             <section className="prod__info">
                 <div className="container">
                     <div className="grid">
@@ -87,20 +99,45 @@ const SingleProduct = () => {
                                 >
                                     {productData.description}
                                 </div>
+
                                 <div className="price">
                                     <h2>${productData.price}</h2>
-                                    <button>Place Order!</button>
-                                </div>
 
+                                    <div className="qty">
+                                        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                                            <InputLabel
+                                                id="demo-select-small"
+                                                style={{ color: "#fff" }}
+                                            >
+                                                Quantity
+                                            </InputLabel>
+                                            <Select
+                                                labelId="demo-select-small"
+                                                id="demo-select-small"
+                                                value={age}
+                                                label="Age"
+                                                onChange={handleChange}
+                                            >
+                                                <MenuItem value={1}>1</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
+                                                <MenuItem value={3}>3</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+                                </div>
+                                <button onClick={() => {
+                                    addToCartHandler(productData);
+                                    navigate('/cart')
+                                }}>Add to Cart!</button>
                                 <div className="rating"> </div>
                             </div>
                             <h3
                                 style={{
-                                    fontWeight: '200',
-                                    fontSize: '2rem',
-                                    color: 'rgb(254, 64, 56)',
-                                    fontFamily: '\'Merienda\'',
-                                    fontSize: '22px'
+                                    fontWeight: "200",
+                                    fontSize: "2rem",
+                                    color: "rgb(254, 64, 56)",
+                                    fontFamily: "'Merienda'",
+                                    fontSize: "22px",
                                 }}
                             >
                                 Related Items:

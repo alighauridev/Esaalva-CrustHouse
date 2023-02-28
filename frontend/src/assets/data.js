@@ -356,4 +356,10 @@ export const nav = [
         path: 'home#faq',
         ref: 'nav4',
     },
+
+    {
+        name: 'Cart',
+        path: '/cart',
+        ref: 'nav4',
+    },
 ]

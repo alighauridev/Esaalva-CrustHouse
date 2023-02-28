@@ -3,13 +3,14 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import "./index.css";
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import SingleProduct from "./pages/SingleProduct";
-
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <>
-      <Header />
+
       <Routes>
         <Route
           path="/"
@@ -25,6 +26,14 @@ function App() {
           element={
             <ProtectedRouter>
               <SingleProduct />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRouter>
+              <Cart />
             </ProtectedRouter>
           }
         />

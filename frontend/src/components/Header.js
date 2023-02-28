@@ -7,7 +7,7 @@ import { ImCross } from 'react-icons/im'
 import { Link } from 'react-router-dom'
 import { nav } from '../assets/data'
 import '../scss/navigation.scss'
-const Header = () => {
+const Header = ({ bg }) => {
     const [navToggler, setNavToggler] = useState(false)
     const [navColor, setNavColor] = useState(false)
     const [scroll, setScroll] = useState(false)
@@ -95,7 +95,8 @@ const Header = () => {
                 //     top: !target ? '0' : '-100px',
                 //     background: navColor ? '' : '',
                 // }}
-                className={navColor ? '' : ''}
+                className={bg ? 'dark' : ''}
+                style={bg ? { background: bg } : { background: 'transparent' }}
             >
                 <div className='outer'>
                     <div className='container'>
