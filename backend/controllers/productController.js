@@ -1,79 +1,79 @@
-const Product = require('../models/Product');
+const Product = require("../models/productModel");
+
+// Create a new product
+exports.createProduct = async (req, res) => {
+    const { name } = req.body;
+
+    const existingProduct = await Product.findOne({ name });
+    if (existingProduct) {
+        return res
+            .status(400)
+            .json({ message: "Product with this name already exists" });
+    }
+    try {
+        const product = new Product(req.body);
+        await product.save();
+        res.status(201).json(product);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+    }
+};
 
 // Get all products
 exports.getProducts = async (req, res) => {
     try {
-        const products = await Product.find().populate('product_class');
+        const products = await Product.find().populate("class_id recipe_id");
         res.status(200).json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
     }
 };
 
-// Create a new product
-exports.createProduct = async (req, res) => {
-    const product = new Product({
-        class_id: req.body.class_id,
-        name: req.body.name,
-        short_name: req.body.short_name,
-        price: req.body.price
-    });
-
+// Get a single product by ID
+exports.getProductById = async (req, res) => {
     try {
-        const newProduct = await product.save();
-        res.status(201).json(newProduct);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-// Get a single product
-exports.getProduct = async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id).populate('product_class');
+        const product = await Product.findById(req.params.id).populate("class_id");
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ error: "Product not found" });
         }
         res.status(200).json(product);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
     }
 };
 
-// Update a product
+// Update a product by ID
 exports.updateProduct = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        }).populate("class_id");
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ error: "Product not found" });
         }
-        product.class_id = req.body.class_id;
-        product.name = req.body.name;
-        product.short_name = req.body.short_name;
-        product.price = req.body.price;
-        const updatedProduct = await product.save();
-        res.status(200).json(updatedProduct);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(200).json(product);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
     }
 };
 
-// Delete a product
+// Delete a product by ID
 exports.deleteProduct = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findByIdAndDelete(req.params.id);
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ error: "Product not found" });
         }
-        await product.remove();
-        res.status(200).json({ message: 'Product deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(204).json();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
     }
 };
-
-
-
 
 // const Product = require("../models/productModel");
 // const asyncErrorHandler = require("../middlewares/asyncErrorHandler");

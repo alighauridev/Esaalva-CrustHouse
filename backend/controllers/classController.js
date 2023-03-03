@@ -12,15 +12,21 @@ exports.getProductClasses = async (req, res) => {
 
 // Create a new product class
 exports.createProductClass = async (req, res) => {
-    const productClass = new ProductClass({
-        class_name: req.body.class_name
-    });
+    const { class_name } = req.body;
 
+    // Check if a class with the same name already exists
+    const existingClass = await ProductClass.findOne({ class_name });
+    if (existingClass) {
+        return res.status(400).json({ message: 'Class with this name already exists' });
+    }
+    // Create a new class
     try {
-        const newProductClass = await productClass.save();
-        res.status(201).json(newProductClass);
+        const newClass = new ProductClass({ class_name });
+        await newClass.save();
+        res.status(201).json(newClass);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 };
 

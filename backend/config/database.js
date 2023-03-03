@@ -4,7 +4,7 @@ dotenv.config();
 mongoose.set('strictQuery', true)
 const connectDatabase = () => {
     mongoose
-        .connect('mongodb+srv://admin:flipcart$7@flipcart.6irf4r8.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+        .connect('mongodb+srv://admin:crusthouse$7@crusthouse.mj2im1a.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             console.log("Mongoose Connected");
         });
