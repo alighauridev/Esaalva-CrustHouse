@@ -1,4 +1,4 @@
-const InventoryLevel = require('../models/inventoryLevel');
+const InventoryLevel = require('../models/InventoryLevelModel');
 
 // create a new inventory level record
 exports.createInventoryLevel = async (req, res) => {

@@ -6,7 +6,7 @@ const salesOrderSchema = new mongoose.Schema({
     time_initiated: { type: Date, default: Date.now },
     status: { type: String, required: true },
     amount: { type: Number, required: true },
-    payment_status: { type: Number, required: true }
+    payment_status: { type: String, required: true }
 });
 
 const SalesOrder = mongoose.model('SalesOrder', salesOrderSchema);

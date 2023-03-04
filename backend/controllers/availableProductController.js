@@ -10,6 +10,19 @@ exports.getProductAvailables = async (req, res) => {
     }
 };
 
+exports.getAvailableProductsByBranch = async (req, res) => {
+    try {
+        const branchId = req.params.id;
+        const products = await ProductAvailable.find({ branch_id: branchId, is_available: true }).populate('product_id branch_id');
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+};
+
+
+
 // Get a single product available by ID
 exports.getProductAvailableById = async (req, res) => {
     try {

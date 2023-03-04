@@ -1,16 +1,51 @@
-const OrderItem = require('../models/orderItem');
+const OrderItem = require("../models/OrderItemModel");
+const ProductComposition = require("../models/ProductCompositionModel");
+const InventoryLevelSchema = require("../models/InventoryLevelModel");
+const Product = require("../models/productModel");
 
-// Create a new order item
+// create a new order item and decrease inventory level of item
 const createOrderItem = async (req, res) => {
+    const { order_id, product_id, quantity, branch_id } = req.body;
+
     try {
-        const { order_id, product_id, quantity, unit_price } = req.body;
-        const orderItem = new OrderItem({ order_id, product_id, quantity, unit_price });
+        // get product composition for product
+        const productComposition = await ProductComposition.find({
+            product_id: product_id,
+        });
+
+        // update inventory level for each item in product composition
+        for (let item of productComposition) {
+            const inventoryLevel = await InventoryLevelSchema.findOne({
+                item_code: item.item_code,
+                branch_id,
+            });
+
+            if (!inventoryLevel) {
+                throw new Error(`Inventory level not found for item ${item.item_code} and branch ${req.branch_id}`);
+            }
+
+            inventoryLevel.quantity_available -= item.quantity * quantity;
+            await inventoryLevel.save();
+        }
+
+        // create new order item
+        const product = await Product.findById(product_id);
+        const orderItem = new OrderItem({
+            order_id: order_id,
+            product_id: product_id,
+            quantity: quantity,
+            unit_price: product.price,
+        });
+
         await orderItem.save();
-        res.status(201).json({ message: 'Order item created successfully', orderItem });
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating order item', error: error.message });
+
+        res.status(201).json(orderItem);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
     }
 };
+
 
 // Get all order items
 const getAllOrderItems = async (req, res) => {
@@ -18,7 +53,9 @@ const getAllOrderItems = async (req, res) => {
         const orderItems = await OrderItem.find();
         res.status(200).json({ orderItems });
     } catch (error) {
-        res.status(500).json({ message: 'Error getting order items', error: error.message });
+        res
+            .status(500)
+            .json({ message: "Error getting order items", error: error.message });
     }
 };
 
@@ -28,11 +65,13 @@ const getOrderItemById = async (req, res) => {
         const { id } = req.params;
         const orderItem = await OrderItem.findById(id);
         if (!orderItem) {
-            return res.status(404).json({ message: 'Order item not found' });
+            return res.status(404).json({ message: "Order item not found" });
         }
         res.status(200).json({ orderItem });
     } catch (error) {
-        res.status(500).json({ message: 'Error getting order item', error: error.message });
+        res
+            .status(500)
+            .json({ message: "Error getting order item", error: error.message });
     }
 };
 
@@ -47,11 +86,15 @@ const updateOrderItem = async (req, res) => {
             { new: true }
         );
         if (!orderItem) {
-            return res.status(404).json({ message: 'Order item not found' });
+            return res.status(404).json({ message: "Order item not found" });
         }
-        res.status(200).json({ message: 'Order item updated successfully', orderItem });
+        res
+            .status(200)
+            .json({ message: "Order item updated successfully", orderItem });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating order item', error: error.message });
+        res
+            .status(500)
+            .json({ message: "Error updating order item", error: error.message });
     }
 };
 
@@ -61,12 +104,22 @@ const deleteOrderItem = async (req, res) => {
         const { id } = req.params;
         const orderItem = await OrderItem.findByIdAndDelete(id);
         if (!orderItem) {
-            return res.status(404).json({ message: 'Order item not found' });
+            return res.status(404).json({ message: "Order item not found" });
         }
-        res.status(200).json({ message: 'Order item deleted successfully', orderItem });
+        res
+            .status(200)
+            .json({ message: "Order item deleted successfully", orderItem });
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting order item', error: error.message });
+        res
+            .status(500)
+            .json({ message: "Error deleting order item", error: error.message });
     }
 };
 
-module.exports = { createOrderItem, getAllOrderItems, getOrderItemById, updateOrderItem, deleteOrderItem };
+module.exports = {
+    createOrderItem,
+    getAllOrderItems,
+    getOrderItemById,
+    updateOrderItem,
+    deleteOrderItem,
+};

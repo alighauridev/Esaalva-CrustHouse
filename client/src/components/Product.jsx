@@ -16,7 +16,7 @@ const Product = ({ product }) => {
 
   return (
     <Card hoverable style={{ width: 240, marginBottom: 30 }} cover={""}>
-      <Meta title={product.name} description={`$${product.price}`} />
+      <Meta title={product.name} description={`${product.price}`} />
       <div className="product-btn">
         <Button onClick={() => handlerToCart()}>Add To Cart</Button>
       </div>

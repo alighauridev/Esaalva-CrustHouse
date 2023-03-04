@@ -34,7 +34,9 @@ const Home = () => {
         dispatch({
           type: "SHOW_LOADING",
         });
-        const { data } = await axios.get("/api/v1/available");
+        const { data } = await axios.get(
+          "/api/v1/available-products/63ff70cc24e35b6afc14c50f"
+        );
         setProductData(data);
         dispatch({
           type: "HIDE_LOADING",
