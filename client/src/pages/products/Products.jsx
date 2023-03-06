@@ -26,7 +26,7 @@ const Products = () => {
       dispatch({
         type: "SHOW_LOADING",
       });
-      const { data } = await axios.get("/api/v1/products");
+      const { data } = await axios.get("/api/v1/available");
       console.log(data);
       setProductData(data);
       dispatch({

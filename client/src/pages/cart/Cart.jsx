@@ -92,34 +92,47 @@ const Cart = () => {
 
   const handlerSubmit = async (value) => {
     try {
-      const newObject = {
-        ...value,
-        status: "pending",
-        amount: subTotal,
-        payment_status: "pending",
+      const cus = {
+        name: value.name,
+        phone: value.phone,
+        city: value.city,
+        sector: value.sector,
+        branch_id: "63ff70cc24e35b6afc14c50f",
+        address: value.address,
       };
-      const { data } = await axios.post("/api/v1/sales-order", newObject);
-      console.log("Sales order created successfully:", data);
+      const res = await axios.post("/api/v1/customer", cus);
 
-      if (data._id) {
-        for (const item of cartItems) {
-          const { _id, quantity, price } = item;
-          const response = await fetch("/api/v1/order-items", {
-            method: "POST",
-            body: JSON.stringify({
-              order_id: data._id,
-              product_id: _id,
-              quantity,
-              unit_price: price,
-              branch_id: "63ff70cc24e35b6afc14c50f",
-            }),
-            headers: { "Content-Type": "application/json" },
-          });
-          const responseData = await response.json();
-          console.log("Order item created successfully:", responseData);
+      if (res.data._id) {
+        const newObject = {
+          branch_id: "63ff70cc24e35b6afc14c50f",
+          customer_id: res.data._id,
+          status: "pending",
+          amount: subTotal,
+          payment_status: "pending",
+        };
+        const { data } = await axios.post("/api/v1/sales-order", newObject);
+        console.log("Sales order created successfully:", data);
+
+        if (data._id) {
+          for (const item of cartItems) {
+            const { _id, quantity, price } = item;
+            const response = await fetch("/api/v1/order-items", {
+              method: "POST",
+              body: JSON.stringify({
+                order_id: data._id,
+                product_id: _id,
+                quantity,
+                unit_price: price,
+                branch_id: "63ff70cc24e35b6afc14c50f",
+              }),
+              headers: { "Content-Type": "application/json" },
+            });
+            const responseData = await response.json();
+            console.log("Order item created successfully:", responseData);
+          }
         }
+        message.success("Order Created Succesfully!");
       }
-      message.success("Bill Generated!");
     } catch (error) {
       message.error("Error!");
       console.error(error);
@@ -132,10 +145,10 @@ const Cart = () => {
       <Table dataSource={cartItems} columns={columns} bordered />
       <div className="subTotal">
         <h2>
-          Sub Total: <span>$ {subTotal.toFixed(2)}</span>
+          Sub Total: <span>{subTotal.toFixed(2)}PKR</span>
         </h2>
         <Button onClick={() => setBillPopUp(true)} className="add-new">
-          Create Invoice
+          Create Order
         </Button>
       </div>
       <Modal
@@ -145,30 +158,39 @@ const Cart = () => {
         footer={false}
       >
         <Form layout="vertical" onFinish={handlerSubmit}>
-          <FormItem name="branch_id" label="branch id">
+          <FormItem name="name" label="name">
             <Input />
           </FormItem>
-          <FormItem name="customer_id" label="Customer id">
+          <FormItem name="phone" label="phone">
             <Input />
           </FormItem>
-          {/* <FormItem name="customerAddress" label="Customer Address">
+          <FormItem name="city" label="city">
             <Input />
-          </FormItem> */}
+          </FormItem>
+          <FormItem name="sector" label="sector">
+            <Input />
+          </FormItem>
+          <FormItem name="address" label="address">
+            <Input />
+          </FormItem>
 
           <div className="total">
-            <span>SubTotal: ${subTotal.toFixed(2)}</span>
+            <h3>
+              Total:
+              {subTotal.toFixed(2)}PKR
+            </h3>
             <br />
-            <span>Tax: ${((subTotal / 100) * 10).toFixed(2)}</span>
+            {/* <span>Tax: ${((subTotal / 100) * 10).toFixed(2)}</span>
             <h3>
               Total: $
               {(
                 Number(subTotal) + Number(((subTotal / 100) * 10).toFixed(2))
               ).toFixed(2)}
-            </h3>
+            </h3> */}
           </div>
           <div className="form-btn-add">
             <Button htmlType="submit" className="add-new">
-              Generate Invoice
+              Generate Order
             </Button>
           </div>
         </Form>
