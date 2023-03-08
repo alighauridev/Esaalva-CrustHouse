@@ -6,7 +6,7 @@ function Header(props) {
   const location = useLocation().pathname;
 
   return (
-    <div className="bg-white fixed left-0 top-0 z-20 w-full border-t border-gray-200 flex flex-col w-max h-[100%] w-[90px] shadow-lg">
+    <div className="bg-white fixed left-0 top-0 z-20  border-t border-gray-200 flex flex-col  h-[100%] w-[90px] shadow-lg">
       {location === "/" ? (
         <Link
           to="/"
