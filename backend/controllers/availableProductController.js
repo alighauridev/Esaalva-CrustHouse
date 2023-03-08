@@ -3,17 +3,67 @@ const ProductAvailable = require('../models/ProductAvailableModel');
 // Get all product availables
 exports.getProductAvailables = async (req, res) => {
     try {
-        const productAvailables = await ProductAvailable.find().populate("product_id branch_id");;
+        const productAvailables = await ProductAvailable.find()
+            .populate({
+                path: "product_id",
+                model: "Product",
+                populate: {
+                    path: "class_id",
+                    model: "ProductClass"
+                }
+            })
+            .populate("branch_id class_id");
+
         res.json(productAvailables);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
+exports.getAvailableProductsByBranchAndClass = async (req, res) => {
+    try {
+        const branchId = req.params.branchId;
+        const classId = req.params.classId;
+
+        const products = await ProductAvailable.find({
+            branch_id: branchId,
+            quantity_available: true
+        })
+            .populate({
+                path: "product_id",
+                model: "Product",
+                populate: {
+                    path: "class_id",
+                    model: "ProductClass",
+                    match: { _id: classId } // filter by class
+                }
+            });
+
+        // Remove products without a matching class
+        const filteredProducts = products.filter((product) => {
+            return product.product_id.class_id != null;
+        });
+
+        res.json(filteredProducts);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+};
+
 exports.getAvailableProductsByBranch = async (req, res) => {
     try {
         const branchId = req.params.id;
-        const products = await ProductAvailable.find({ branch_id: branchId, is_available: true }).populate('product_id branch_id');
+        const products = await ProductAvailable.find({ branch_id: branchId, is_available: true })
+            .populate({
+                path: "product_id",
+                model: "Product",
+                populate: {
+                    path: "class_id",
+                    model: "ProductClass"
+                }
+            })
+
         res.json(products);
     } catch (err) {
         console.error(err.message);

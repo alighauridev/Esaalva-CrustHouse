@@ -1,6 +1,6 @@
 // Import necessary modules
 const express = require("express");
-const { getProductAvailables, getProductAvailableById, createProductAvailable, getAvailableProductsByBranch } = require("../controllers/availableProductController");
+const { getProductAvailables, getProductAvailableById, createProductAvailable, getAvailableProductsByBranch, getAvailableProductsByBranchAndClass } = require("../controllers/availableProductController");
 const { getAllBranches, getBranchById, createBranch } = require("../controllers/branchController");
 const {
     createProductClass,
@@ -87,5 +87,6 @@ router.get("/available", getProductAvailables);
 router.get("/available-product/:id", getProductAvailableById);
 router.post("/available", createProductAvailable);
 router.get("/available-products/:id", getAvailableProductsByBranch);
+router.get("/available-products/:branchId/:classId", getAvailableProductsByBranchAndClass);
 // Export router
 module.exports = router;

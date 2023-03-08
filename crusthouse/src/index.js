@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import * as serviceWorker from './serviceWorker';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import ReactGA from 'react-ga';
-
+import Store from "../src/Redux/store/store.js";
 import App from './App';
 import cartReducer from './reducers/cartReducer';
 
@@ -88,11 +88,10 @@ ReactGA.initialize('UA-51659765-2');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 // Redux
-const store = createStore(cartReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={Store}>
       <BrowserRouter >
         <AlertProvider template={AlertTemplate} {...options}>
           <App />

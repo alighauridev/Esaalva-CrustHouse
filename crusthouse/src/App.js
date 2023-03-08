@@ -36,10 +36,10 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
           <Route path="/order" element={<Order />}></Route>
-          <Route
+          {/* <Route
             path="/pay"
             element={<Pay timestamp={new Date().getTime().toString()} />}
-          ></Route>
+          ></Route> */}
           <Route path="/sales" element={<Sales />}></Route>
           <Route path="/store" element={<Store />}></Route>
         </Routes>
