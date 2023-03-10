@@ -25,8 +25,10 @@ export default function Cart() {
     const [age, setAge] = React.useState(1);
     const handleChange = (event) => {
         setAge(event.target.value);
-    }
-    const total = cartProducts.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
+    };
+    const total = cartProducts
+        .reduce((a, i) => a + i.qty * i.price, 0)
+        .toFixed(2);
     return (
         <>
             <Header bg={"#fff"} />
@@ -50,15 +52,27 @@ export default function Cart() {
 
                                             <div className="d-flex justify-content-between align-items-center mb-4">
                                                 <div>
-                                                    <p className="mb-1" style={{ color: "#000" }}>Shopping cart</p>
-                                                    <p className="mb-0" style={{ color: "#000" }}>You have {cartProducts.length} items in your cart</p>
+                                                    <p className="mb-1" style={{ color: "#000" }}>
+                                                        Shopping cart
+                                                    </p>
+                                                    <p className="mb-0" style={{ color: "#000" }}>
+                                                        You have {cartProducts.length} items in your cart
+                                                    </p>
                                                 </div>
                                                 <div>
                                                     <p>
                                                         <span className="text-muted">Sort by:</span>
-                                                        <a href="#!" className="text-body" style={{ color: "#000" }}>
+                                                        <a
+                                                            href="#!"
+                                                            className="text-body"
+                                                            style={{ color: "#000" }}
+                                                        >
                                                             price
-                                                            <MDBIcon fas icon="angle-down mt-1" style={{ color: "#000" }} />
+                                                            <MDBIcon
+                                                                fas
+                                                                icon="angle-down mt-1"
+                                                                style={{ color: "#000" }}
+                                                            />
                                                         </a>
                                                     </p>
                                                 </div>
@@ -80,10 +94,16 @@ export default function Cart() {
                                                                         />
                                                                     </div>
                                                                     <div className="ms-3">
-                                                                        <MDBTypography tag="h5" style={{ color: "#000" }}>
+                                                                        <MDBTypography
+                                                                            tag="h5"
+                                                                            style={{ color: "#000" }}
+                                                                        >
                                                                             {item.title}
                                                                         </MDBTypography>
-                                                                        <p className="small mb-0" style={{ color: "#000" }}>
+                                                                        <p
+                                                                            className="small mb-0"
+                                                                            style={{ color: "#000" }}
+                                                                        >
                                                                             {item.description}
                                                                         </p>
                                                                     </div>
@@ -92,18 +112,27 @@ export default function Cart() {
                                                                     <div style={{ width: "50px" }}>
                                                                         <MDBTypography
                                                                             tag="h5"
-                                                                            className="fw-normal mb-0" style={{ color: "#000" }}
+                                                                            className="fw-normal mb-0"
+                                                                            style={{ color: "#000" }}
                                                                         >
                                                                             {item.qty}
                                                                         </MDBTypography>
                                                                     </div>
                                                                     <div style={{ width: "80px" }}>
-                                                                        <MDBTypography tag="h5" className="mb-0" style={{ color: "#000" }}>
+                                                                        <MDBTypography
+                                                                            tag="h5"
+                                                                            className="mb-0"
+                                                                            style={{ color: "#000" }}
+                                                                        >
                                                                             {item.price}
                                                                         </MDBTypography>
                                                                     </div>
                                                                     <a href="#!" style={{ color: "#cecece" }}>
-                                                                        <MDBIcon fas icon="trash-alt" style={{ color: "#000" }} />
+                                                                        <MDBIcon
+                                                                            fas
+                                                                            icon="trash-alt"
+                                                                            style={{ color: "#000" }}
+                                                                        />
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -118,7 +147,7 @@ export default function Cart() {
                                                 <MDBCardBody>
                                                     <div className="d-flex justify-content-between align-items-center mb-4">
                                                         <MDBTypography tag="h5" className="mb-0">
-                                                            Card details
+                                                            Customer details
                                                         </MDBTypography>
                                                         <MDBCardImage
                                                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
@@ -129,11 +158,7 @@ export default function Cart() {
                                                         />
                                                     </div>
 
-                                                    <p className="small">Card type</p>
-
-
-                                                    <form className="mt-4">
-
+                                                    <form className="mt-1">
                                                         <MDBInput
                                                             className="mb-4"
                                                             label=" Name"
@@ -155,7 +180,10 @@ export default function Cart() {
 
                                                         <MDBRow className="mb-4">
                                                             <MDBCol md="6">
-                                                                <FormControl sx={{ m: 1, minWidth: '100%' }} size="small">
+                                                                <FormControl
+                                                                    sx={{ m: 1, minWidth: "100%" }}
+                                                                    size="small"
+                                                                >
                                                                     <InputLabel
                                                                         id="demo-select-small"
                                                                         style={{ color: "#fff" }}
@@ -177,7 +205,10 @@ export default function Cart() {
                                                                 </FormControl>
                                                             </MDBCol>
                                                             <MDBCol md="6">
-                                                                <FormControl sx={{ m: 1, minWidth: '100%' }} size="small">
+                                                                <FormControl
+                                                                    sx={{ m: 1, minWidth: "100%" }}
+                                                                    size="small"
+                                                                >
                                                                     <InputLabel
                                                                         id="demo-select-small"
                                                                         style={{ color: "#fff" }}
@@ -218,8 +249,13 @@ export default function Cart() {
                                                         <p className="mb-2">${total}</p>
                                                     </div>
 
-                                                    <MDBBtn color="info" block size="lg" >
-                                                        <div className="d-flex justify-content-between" onClick={() => toast.success('Order Created Successfully!')}>
+                                                    <MDBBtn color="info" block size="lg">
+                                                        <div
+                                                            className="d-flex justify-content-between"
+                                                            onClick={() =>
+                                                                toast.success("Order Created Successfully!")
+                                                            }
+                                                        >
                                                             <span>${total}.00</span>
                                                             <span>
                                                                 Checkout{" "}

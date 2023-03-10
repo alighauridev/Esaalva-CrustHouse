@@ -6,11 +6,10 @@ import "./index.css";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import SingleProduct from "./pages/SingleProduct";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
-
       <Routes>
         <Route
           path="/"

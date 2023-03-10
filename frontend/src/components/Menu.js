@@ -29,7 +29,7 @@ const Menu = () => {
     return (
         <section className="menu" id="menu">
             <div className="heading">
-                <h1>KFC MENU</h1>
+                <h1>{pointName} MENU</h1>
             </div>
             <div className="container">
                 <div className="grid">
