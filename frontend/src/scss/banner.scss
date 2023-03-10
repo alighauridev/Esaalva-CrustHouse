@@ -3,7 +3,6 @@
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url(../assets/banner2.jpg);
-  margin-top: -100px;
   .container {
     display: grid;
     max-width: 700px;
@@ -11,7 +10,8 @@
     justify-content: center;
     text-align: center;
     height: 100%;
-    margin: auto;
+    margin: -100px auto 0;
+
     h1 {
       font-size: 3rem;
       font-weight: 500;
@@ -24,15 +24,20 @@
       margin: 10px 0 20px;
       font-family: "Jost";
     }
-    button {
-      padding: 15px 80px;
-      border: 1px solid #fff;
-      color: #fff;
-      background: transparent;
-      font-size: 20px;
-      font-family: "Oswald";
-      text-transform: uppercase;
-      cursor: pointer;
+    .flex {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      button {
+        padding: 10px 70px;
+        border: 1px solid #fff;
+        color: #fff;
+        background: transparent;
+        font-size: 20px;
+        font-family: "Oswald";
+        text-transform: uppercase;
+        cursor: pointer;
+      }
     }
   }
 }

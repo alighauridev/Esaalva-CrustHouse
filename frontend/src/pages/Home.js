@@ -9,12 +9,12 @@ import "../scss/banner.scss"
 const Home = () => {
     return (
         <>
-            <Header />
+
             <Banner />
-            <AboutNft />
+            {/* <AboutNft />
             <Menu />
             <Team />
-            <Footer />
+            <Footer /> */}
         </>
     )
 }
