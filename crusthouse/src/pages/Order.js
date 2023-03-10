@@ -9,14 +9,16 @@ import {
 } from "../Redux/actions/productActions";
 import ContentLoader from "react-content-loader";
 import { addToCart } from "../Redux/actions/cartActions";
+import ProductModal from "../components/ProductModal";
 const Order = () => {
   const [category, setCategory] = useState();
   const dispatch = useDispatch();
+  const [classId, setClassId] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [product, setProduct] = useState("")
   const availableProducts = useSelector((state) => state.Products);
   const { loading, items } = availableProducts;
-  const addToCartHandler = (pro) => {
-    dispatch(addToCart(pro.product_id._id, 1));
-  };
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -121,7 +123,11 @@ const Order = () => {
                         "bg-white  flex-shrink-0  relative overflow-hidden rounded-lg max-w-xs shadow-lg transform transition-all duration-300 scale-100 hover:scale-95 cursor-pointer"
                       }
                       key={item.id}
-                      onClick={() => addToCartHandler(item)}
+                      onClick={() => {
+                        setModal(true)
+                        setClassId(item.product_id.class_id._id);
+                        setProduct(item.product_id._id)
+                      }}
                     >
                       <div className="relative text-white px-4 pb-4 mt-4">
                         <img src={Item4} />
@@ -152,6 +158,7 @@ const Order = () => {
           <Pay />
         </div>
       </main >
+      <ProductModal isOpen={modal} setModal={setModal} product={product} classId={classId} />
     </div >
   );
 };

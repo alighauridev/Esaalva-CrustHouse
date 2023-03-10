@@ -2,10 +2,11 @@ const OrderItem = require("../models/OrderItemModel");
 const ProductComposition = require("../models/ProductCompositionModel");
 const InventoryLevelSchema = require("../models/InventoryLevelModel");
 const Product = require("../models/productModel");
+const OrderOption = require("../models/orderOptionModel");
 
 // create a new order item and decrease inventory level of item
 const createOrderItem = async (req, res) => {
-    const { order_id, product_id, quantity, branch_id } = req.body;
+    const { order_id, product_id, quantity, branch_id, order_option_id } = req.body;
 
     try {
         // get product composition for product
@@ -37,9 +38,15 @@ const createOrderItem = async (req, res) => {
             unit_price: product.price,
         });
 
-        await orderItem.save();
 
-        res.status(201).json(orderItem);
+        await orderItem.save();
+        const orderOption = new OrderOption({
+            Option_Id: order_option_id,
+            Order_Item_Id: orderItem._id,
+
+        });
+        await orderOption.save();
+        res.status(201).json({ orderItem, orderOption });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server error" });

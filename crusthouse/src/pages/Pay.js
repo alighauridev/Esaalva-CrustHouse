@@ -1,31 +1,58 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ProductModal from "../components/ProductModal";
 import OrderForm from "../components/OrderForm";
 import Item4 from "../images/chicken-crispy.png";
-
+import { BsPencilSquare } from "react-icons/bs";
 import Recipe from "../partials/Recipe";
-import { addToCart, removeCart } from "../Redux/actions/cartActions";
+import {
+  addToCart,
+  editCartItem,
+  removeCart,
+  removeFromCart,
+  updateCartItem,
+} from "../Redux/actions/cartActions";
+import axios from "axios";
 
 const Pay = () => {
   const Cart = useSelector((state) => state.Cart);
   const [open, setOpen] = React.useState(false);
-
+  const [classId, setClassId] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [product, setProduct] = useState("");
   const { cartItems } = Cart;
   const dispatch = useDispatch();
-  const removeCartNow = (item) => {
-    dispatch(removeCart(item.product));
+  const removeCartNow = (id, option) => {
+    dispatch(removeFromCart(id, option));
   };
+
   const qtyHandler = (item, check) => {
     if (check === "add" && item.qty < 5) {
-      dispatch(addToCart(item.product, Number(item.qty + 1)));
+      dispatch(
+        editCartItem(item.product, item.option_id, Number(item.qty + 1))
+      );
     }
     if (check === "remove" && item.qty > 1) {
-      dispatch(addToCart(item.product, Number(item.qty - 1)));
+      dispatch(
+        editCartItem(item.product, item.option_id, Number(item.qty - 1))
+      );
     }
-
   };
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
+
+  const getAllOptions = async () => {
+    try {
+      const { data } = await axios.get(`/api/v1/option/${classId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllOptions();
+  }, []);
+
   return (
     <div className="container max-w-5xl mx-auto     ">
       <section className="cart  bg-white px-4 py-3   border- overflow-hidden rounded-lg shadow-lg">
@@ -48,13 +75,15 @@ const Pay = () => {
                       </div>
 
                       <div className="flex items-center justify-center flex-col text-md">
-                        <div className="w-[100%]">   {item.class_id.class_name}</div>
+                        <div className="w-[100%]">
+                          {" "}
+                          {item.class_id.class_name}
+                        </div>
                         <div className="font-bold">{item.title}</div>
                       </div>
                     </div>
 
                     <div className="flex gap-3  w-18 font-medium items-center">
-
                       <div className="flex flex-row border h-8 rounded-xl relative">
                         <span
                           className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold pt-1 px-4 rounded-l"
@@ -81,7 +110,7 @@ const Pay = () => {
                       </div>
                       <button
                         className="w-5 h-5  hover:bg-red-200 rounded-full  cursor-pointer text-red-700"
-                        onClick={() => removeCartNow(item)}
+                        onClick={() => removeCartNow(item.product, item.option_id)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +130,7 @@ const Pay = () => {
                           <line x1="14" y1="11" x2="14" y2="17"></line>
                         </svg>
                       </button>
+
                     </div>
                   </div>
                 </div>
@@ -131,14 +161,22 @@ const Pay = () => {
             <div className="font-bold text-2xl">{total}PKR</div>
           </div>
         </div>
-        <button onClick={() => setOpen(!open)} class="bg-blue-500 w-[100%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out" >
+        <button
+          onClick={() => setOpen(!open)}
+          class="bg-blue-500 w-[100%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        >
           Create Order
         </button>
-
       </section>
-      <OrderForm setOpen={setOpen} open={open} />
+      <OrderForm setOpen={setOpen} total={total} open={open} />
+      <ProductModal
+        isOpen={modal}
+        setModal={setModal}
+        product={product}
+        classId={classId}
+        update={true}
+      />
     </div>
-
   );
 };
 

@@ -11,8 +11,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import axios from "axios";
 import Modal from '@mui/material/Modal';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
@@ -30,7 +32,7 @@ const style = {
 const theme = createTheme();
 
 
-function OrderForm({ open, setOpen }) {
+function OrderForm({ open, setOpen, total }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const handleSubmit = (event) => {
@@ -40,6 +42,66 @@ function OrderForm({ open, setOpen }) {
             email: data.get('email'),
             password: data.get('password'),
         });
+    };
+
+    const cartItems = useSelector(state => state.Cart.cartItems);
+    const handlerSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const name = data.get('Name');
+        const phone = data.get('Phone');
+        const city = data.get('City');
+        const sector = data.get('Sector');
+        const address = data.get('address');
+
+        try {
+            const cus = {
+                name,
+                phone,
+                city,
+                sector,
+                branch_id: "63ff70cc24e35b6afc14c50f",
+                address,
+            };
+            const res = await axios.post("/api/v1/customer", cus);
+
+            if (res.data._id) {
+                const newObject = {
+                    branch_id: "63ff70cc24e35b6afc14c50f",
+                    customer_id: res.data._id,
+                    status: "pending",
+                    amount: total,
+                    payment_status: "pending",
+                };
+                const { data } = await axios.post("/api/v1/sales-order", newObject);
+                console.log("Sales order created successfully:", data);
+
+                if (data._id) {
+                    for (const item of cartItems) {
+                        const { qty, price, option_id, product } = item;
+                        const response = await fetch("/api/v1/order-items", {
+                            method: "POST",
+                            body: JSON.stringify({
+                                order_id: data._id,
+                                product_id: product,
+                                quantity: qty,
+                                unit_price: price,
+                                branch_id: "63ff70cc24e35b6afc14c50f",
+                                order_option_id: option_id,
+                            }),
+                            headers: { "Content-Type": "application/json" },
+                        });
+                        const responseData = await response.json();
+                        console.log("Order item created successfully:", responseData);
+                    }
+                }
+                toast.success("Order Created Succesfully!");
+                setOpen(false)
+            }
+        } catch (error) {
+            toast.error("Error!");
+            console.error(error);
+        }
     };
 
     return (
@@ -66,7 +128,7 @@ function OrderForm({ open, setOpen }) {
                                 <Typography component="h1" variant="h5">
                                     Customer Details
                                 </Typography>
-                                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                                <Box component="form" noValidate onSubmit={handlerSubmit} sx={{ mt: 3 }}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={12}>
                                             <TextField
@@ -122,7 +184,7 @@ function OrderForm({ open, setOpen }) {
 
 
                                     </Grid>
-                                    <button onClick={() => setOpen(!open)} class="bg-blue-500 mt-4 w-[100%] hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition duration-300 ease-in-out" >
+                                    <button type='submit' class="bg-blue-500 mt-4 w-[100%] hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition duration-300 ease-in-out" >
                                         Confirm Order
                                     </button>
 

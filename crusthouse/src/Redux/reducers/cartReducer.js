@@ -1,19 +1,24 @@
 import { toast } from "react-toastify";
-import { CART_ADD_ITEM, CART_CLEAR_ITEMS, CART_REMOVE_ITEM } from "../constants/cartConstants";
+import {
+  CART_ADD_ITEM,
+  CART_CLEAR_ITEMS,
+  CART_REMOVE_ITEM,
+  CART_EDIT_ITEM,
+} from "../constants/cartConstants";
 
 export const cartReducer = (state = { cartItems: [] }, { type, payload }) => {
   switch (type) {
     case CART_ADD_ITEM:
-      // chk if product already exist in cart
-      const exist = state.cartItems.find((x) => x.product == payload.product);
-      console.log(exist);
+      // Check if product already exists in cart
+      const exist = state.cartItems.find(
+        (x) => x.product === payload.product && x.option_id === payload.option_id
+      );
       if (exist) {
         toast.warning("Item is already in your Cart!");
-        console.log("Item is already in your Cart!");
         return {
           ...state,
           cartItems: state.cartItems.map((x) =>
-            x.product == exist.product ? payload : x
+            x.product === exist.product && x.option_id === exist.option_id ? payload : x
           ),
         };
       } else {
@@ -23,13 +28,11 @@ export const cartReducer = (state = { cartItems: [] }, { type, payload }) => {
           cartItems: [...state.cartItems, payload],
         };
       }
-      break;
-
     case CART_REMOVE_ITEM:
-      toast.success("Item removed");
+
       return {
         ...state,
-        cartItems: state.cartItems.filter((x) => x.product !== payload),
+        cartItems: payload,
       };
     case CART_CLEAR_ITEMS:
       toast.success("Item cleared");
@@ -37,6 +40,23 @@ export const cartReducer = (state = { cartItems: [] }, { type, payload }) => {
         ...state,
         cartItems: [],
       };
+    case CART_EDIT_ITEM:
+      const item = state.cartItems.find(
+        (x) => x.product === payload.product && x.option_id === payload.option_id
+      );
+      if (item) {
+        // edit the quantity of the existing item
+        item.qty = payload.qty;
+        toast.success("Item quantity updated");
+        return {
+          ...state,
+          cartItems: [...state.cartItems],
+        };
+      } else {
+        toast.warning("Item does not exist in your Cart");
+        return state;
+      }
+
 
     default:
       return state;

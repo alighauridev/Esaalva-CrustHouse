@@ -1,23 +1,57 @@
 // Import necessary modules
 const express = require("express");
-const { getProductAvailables, getProductAvailableById, createProductAvailable, getAvailableProductsByBranch, getAvailableProductsByBranchAndClass } = require("../controllers/availableProductController");
-const { getAllBranches, getBranchById, createBranch } = require("../controllers/branchController");
+const {
+    getProductAvailables,
+    getProductAvailableById,
+    createProductAvailable,
+    getAvailableProductsByBranch,
+    getAvailableProductsByBranchAndClass,
+} = require("../controllers/availableProductController");
+const {
+    getAllBranches,
+    getBranchById,
+    createBranch,
+} = require("../controllers/branchController");
 const {
     createProductClass,
     getProductClass,
     getProductClasses,
 } = require("../controllers/classController");
-const { getCustomers, getCustomer, createCustomer } = require("../controllers/customerController");
-const { getAllInventoryClasses, getInventoryClassById, createInventoryClass } = require("../controllers/InventoryClassControllers");
-const { createInventoryItem, getInventoryItemById, getAllInventoryItems } = require("../controllers/InventoryItemController");
-const { getInventoryLevels, getInventoryLevelById, createInventoryLevel } = require("../controllers/InventoryLevelController");
+const {
+    getCustomers,
+    getCustomer,
+    createCustomer,
+} = require("../controllers/customerController");
+const {
+    getAllInventoryClasses,
+    getInventoryClassById,
+    createInventoryClass,
+} = require("../controllers/InventoryClassControllers");
+const {
+    createInventoryItem,
+    getInventoryItemById,
+    getAllInventoryItems,
+} = require("../controllers/InventoryItemController");
+const {
+    getInventoryLevels,
+    getInventoryLevelById,
+    createInventoryLevel,
+} = require("../controllers/InventoryLevelController");
 const {
     getProductOptions,
     getProductOptionById,
     createProductOption,
+    getProductOptionsByClassId,
 } = require("../controllers/optionController");
-const { getAllOrderItems, getOrderItemById, createOrderItem } = require("../controllers/orderController");
-const { getProductComposition, createProductComposition } = require("../controllers/productCompositionController");
+const {
+    getAllOrderItems,
+    getOrderItemById,
+    createOrderItem,
+} = require("../controllers/orderController");
+const {
+    getProductComposition,
+    createProductComposition,
+} = require("../controllers/productCompositionController");
 const {
     getProducts,
     getProductById,
@@ -28,7 +62,11 @@ const {
     getProductRecipeById,
     createProductRecipe,
 } = require("../controllers/recepieController");
-const { getSalesOrders, getSalesOrderById, createSalesOrder } = require("../controllers/SalesOrderController");
+const {
+    getSalesOrders,
+    getSalesOrderById,
+    createSalesOrder,
+} = require("../controllers/SalesOrderController");
 const router = express.Router();
 
 // class controllers
@@ -72,7 +110,8 @@ router.get("/recipe/:id", getProductRecipeById);
 router.post("/recipe", createProductRecipe);
 // productOptions controllers
 router.get("/option", getProductOptions);
-router.get("/option/:id", getProductOptionById);
+router.get("/option/:class_id", getProductOptionsByClassId);
+router.get("/optionn/:id", getProductOptionById);
 router.post("/option", createProductOption);
 // product controllers
 router.get("/product", getProducts);
@@ -87,6 +126,9 @@ router.get("/available", getProductAvailables);
 router.get("/available-product/:id", getProductAvailableById);
 router.post("/available", createProductAvailable);
 router.get("/available-products/:id", getAvailableProductsByBranch);
-router.get("/available-products/:branchId/:classId", getAvailableProductsByBranchAndClass);
+router.get(
+    "/available-products/:branchId/:classId",
+    getAvailableProductsByBranchAndClass
+);
 // Export router
 module.exports = router;

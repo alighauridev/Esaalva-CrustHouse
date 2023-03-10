@@ -10,7 +10,8 @@ import Pay from "./pages/Pay";
 import Sales from "./pages/Sales";
 import Store from "./pages/Store";
 import Header from "./partials/Header";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const location = useLocation();
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/sales" element={<Sales />}></Route>
           <Route path="/store" element={<Store />}></Route>
         </Routes>
+        <ToastContainer />
       </div>
       <Header />
     </>

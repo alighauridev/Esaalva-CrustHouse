@@ -18,6 +18,15 @@ exports.createProductOption = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+// get all product options by class_id
+exports.getProductOptionsByClassId = async (req, res) => {
+    try {
+        const productOptions = await ProductOption.find({ class_id: req.params.class_id });
+        res.status(200).json(productOptions);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 // get all product options
 exports.getProductOptions = async (req, res) => {
