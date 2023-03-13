@@ -20,7 +20,7 @@ const menuItemSchema = new Schema({
         type: String,
         required: true
     },
-    category: {
+    meal: {
         type: String,
         required: true
     },

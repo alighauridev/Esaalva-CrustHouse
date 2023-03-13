@@ -11,7 +11,7 @@ import {
     MDBTypography,
 } from "mdb-react-ui-kit";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -19,16 +19,22 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Header from "../components/Header";
 import { toast } from "react-toastify";
+import { addToCart, removeCart } from "../Redux/actions/cartActions";
 
 export default function Cart() {
     const cartProducts = useSelector((state) => state.Cart.cartItems);
     const [age, setAge] = React.useState(1);
+    const dispatch = useDispatch()
     const handleChange = (event) => {
         setAge(event.target.value);
     };
     const total = cartProducts
         .reduce((a, i) => a + i.qty * i.price, 0)
         .toFixed(2);
+
+    const deleteCart = (id) => {
+        dispatch(removeCart(id))
+    }
     return (
         <>
             <Header bg={"#fff"} />
@@ -42,8 +48,8 @@ export default function Cart() {
                                     <MDBRow>
                                         <MDBCol lg="7">
                                             <MDBTypography tag="h5">
-                                                <Link to={"/"} className="text-body">
-                                                    <MDBIcon fas icon="long-arrow-alt-left me-2" />{" "}
+                                                <Link to={"/menu"} className="text-body">
+                                                    {" "}
                                                     Continue shopping
                                                 </Link>
                                             </MDBTypography>
@@ -59,23 +65,7 @@ export default function Cart() {
                                                         You have {cartProducts.length} items in your cart
                                                     </p>
                                                 </div>
-                                                <div>
-                                                    <p>
-                                                        <span className="text-muted">Sort by:</span>
-                                                        <a
-                                                            href="#!"
-                                                            className="text-body"
-                                                            style={{ color: "#000" }}
-                                                        >
-                                                            price
-                                                            <MDBIcon
-                                                                fas
-                                                                icon="angle-down mt-1"
-                                                                style={{ color: "#000" }}
-                                                            />
-                                                        </a>
-                                                    </p>
-                                                </div>
+                                                <div></div>
                                             </div>
 
                                             {cartProducts.map((item, ind) => {
@@ -109,14 +99,28 @@ export default function Cart() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="d-flex flex-row align-items-center">
-                                                                    <div style={{ width: "50px" }}>
-                                                                        <MDBTypography
-                                                                            tag="h5"
-                                                                            className="fw-normal mb-0"
-                                                                            style={{ color: "#000" }}
-                                                                        >
-                                                                            {item.qty}
-                                                                        </MDBTypography>
+                                                                    <div
+                                                                        className="quantity"
+
+                                                                    >
+                                                                        <select value={item.qty} id="" style={{
+                                                                            wordWrap: 'normal',
+                                                                            color: 'black',
+                                                                            border: '1px solid black',
+                                                                            marginRight: '10px',
+                                                                            borderRadius: '4px'
+                                                                        }} onChange={(e) =>
+                                                                            dispatch(
+                                                                                addToCart(item.product, Number(e.target.value))
+                                                                            )
+                                                                        }>
+                                                                            {[...Array(7).keys()].map((x) => (
+                                                                                <option style={{ color: 'black' }} value={x + 1} key={x + 1}>
+                                                                                    {x + 1}
+
+                                                                                </option>
+                                                                            ))}
+                                                                        </select>
                                                                     </div>
                                                                     <div style={{ width: "80px" }}>
                                                                         <MDBTypography
@@ -127,13 +131,14 @@ export default function Cart() {
                                                                             {item.price}
                                                                         </MDBTypography>
                                                                     </div>
-                                                                    <a href="#!" style={{ color: "#cecece" }}>
-                                                                        <MDBIcon
-                                                                            fas
-                                                                            icon="trash-alt"
-                                                                            style={{ color: "#000" }}
-                                                                        />
-                                                                    </a>
+
+                                                                    <MDBIcon
+                                                                        fas
+                                                                        icon="trash-alt"
+                                                                        style={{ color: "#000" }}
+                                                                        onClick={() => deleteCart(item.product)}
+                                                                    />
+
                                                                 </div>
                                                             </div>
                                                         </MDBCardBody>
@@ -246,7 +251,7 @@ export default function Cart() {
 
                                                     <div className="d-flex justify-content-between">
                                                         <p className="mb-2">Total(Incl. taxes)</p>
-                                                        <p className="mb-2">${total}</p>
+                                                        <p className="mb-2">{total}</p>
                                                     </div>
 
                                                     <MDBBtn color="info" block size="lg">
@@ -256,7 +261,7 @@ export default function Cart() {
                                                                 toast.success("Order Created Successfully!")
                                                             }
                                                         >
-                                                            <span>${total}.00</span>
+                                                            <span>{total}.00</span>
                                                             <span>
                                                                 Checkout{" "}
                                                                 <i className="fas fa-long-arrow-alt-right ms-2"></i>

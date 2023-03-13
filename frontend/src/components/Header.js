@@ -4,6 +4,7 @@ import { AiOutlineTwitter } from 'react-icons/ai'
 import { BsChevronUp } from 'react-icons/bs'
 import { FaTiktok } from 'react-icons/fa'
 import { ImCross } from 'react-icons/im'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { nav } from '../assets/data'
 import '../scss/navigation.scss'
@@ -21,7 +22,7 @@ const Header = ({ bg }) => {
         }
     }
     mobilenav()
-
+    const cartProducts = useSelector((state) => state.Cart.cartItems);
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
             setScroll(true)
@@ -113,73 +114,28 @@ const Header = ({ bg }) => {
                                             </li>
                                         )
                                     })}
-
-                                    <li className='nav__links'>
-                                        <a
-                                            href='https://www.youtube.com/channel/UCwj4YrAKFltipzbrp_0YR3A/featured
-'
-                                            target='_blank' rel='noreferrer'
-                                        >
-                                            {/* <YouTube /> */}
-                                        </a>
-                                        <a
-                                            href='https://www.instagram.com/dogerush/'
-                                            target='_blank' rel='noreferrer'
-                                        >
-                                            {/* <Instagram /> */}
-                                        </a>
-                                        <a
-                                            href='https://t.me/dogerushcommunity'
-                                            target='_blank' rel='noreferrer'
-                                        >
-                                            {/* <Telegram /> */}
-                                        </a>
-                                        <a
-                                            href='https://www.tiktok.com/@dogerushofficial'
-                                            target='_blank' rel='noreferrer'
-                                        >
-                                            <FaTiktok />
-                                        </a>
-                                        <a
-                                            href='https://twitter.com/dogerushcoin '
-                                            target='_blank' rel='noreferrer'
-                                        >
-                                            <AiOutlineTwitter />
-                                        </a>
+                                    <li style={{ position: 'relative' }} className='list-item'>
+                                        <span style={{
+                                            position: 'absolute',
+                                            background: '#ff0000',
+                                            height: '20px',
+                                            width: '20px',
+                                            borderRadius: '100px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '14px',
+                                            right: '8px',
+                                            zIndex: '1',
+                                            top: '3px'
+                                        }}>{cartProducts.length}</span>
+                                        <Link to={'/cart'}>
+                                            Cart
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>
-                            <div className='nav__btns'>
-                                <a
-                                    href={
-                                        'https://discord.com/invite/DcrwzT9WnD'
-                                    }
-                                    target={'_blank'}
-                                ></a>
-                                <div onClick={() => barBtn()}>
-                                    <span
-                                        style={{
-                                            transform: navToggler
-                                                ? 'translateY(15px) rotate(45deg)'
-                                                : 'unset',
-                                        }}
-                                    ></span>
-                                    <span
-                                        style={{
-                                            display: navToggler
-                                                ? 'none '
-                                                : 'unset',
-                                        }}
-                                    ></span>
-                                    <span
-                                        style={{
-                                            transform: navToggler
-                                                ? 'translateY(-6px) rotate(-45deg) '
-                                                : 'unset',
-                                        }}
-                                    ></span>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+@import "./media.scss";
 html {
   scroll-behavior: smooth;
 }
@@ -10,6 +11,9 @@ html {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-column-gap: 1rem;
+      @include md {
+        grid-template-columns: 1fr;
+      }
       > .item {
         padding: 10px;
       }
@@ -145,7 +149,9 @@ html {
                   justify-content: space-between;
                   align-items: center;
                   h3 {
-                    font-weight: 200;
+                    font-weight: 400;
+                    font-size: 22px;
+                    margin: 0;
                   }
                   .end {
                     color: greenyellow;

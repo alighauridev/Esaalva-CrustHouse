@@ -34,7 +34,9 @@ router.delete("/customers/:id", customerController.deleteCustomer);
 // Menu routes
 router.get("/menus", menuController.getMenus);
 router.post("/menus", menuController.createMenu);
+router.put("/menu/:id", menuController.editMenu);
 router.post("/menu-item", menuController.createMenuItem);
+router.put("/menu-item/:id", menuController.updateMenuItem);
 router.get("/menu-items", menuController.getMenuItems);
 router.get("/menu-item/:id", menuController.getMenuItemById);
 router.get("/menu-itemm/:category", menuController.getMenuItemsByCategory);
@@ -45,6 +47,7 @@ router.get("/menu-itemm/:category", menuController.getMenuItemsByCategory);
 // FoodPoint routes
 router.get("/foodpoints", foodPointController.getAllFoodPoints);
 router.get("/foodpoints/:id", foodPointController.getFoodPointById);
+router.get("/foodpoints/:foodPointId/products", foodPointController.getProductsByMealAndFoodPointId);
 router.post("/foodpoints", foodPointController.createFoodPoint);
 router.put("/foodpoints/:id", foodPointController.updateFoodPoint);
 router.delete("/foodpoints/:id", foodPointController.deleteFoodPoint);

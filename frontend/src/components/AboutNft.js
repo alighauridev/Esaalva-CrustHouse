@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "../scss/aboutnft.scss";
 
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const AboutNft = () => {
   const [imge, setimge] = useState("/images/characters/group.png");
@@ -12,6 +13,7 @@ const AboutNft = () => {
   const navigate = useNavigate();
   return (
     <>
+      <Header bg={"#fff"} />
       <section id="about" className="about">
         <div className="container">
           <div className="about__grid">
@@ -31,7 +33,7 @@ const AboutNft = () => {
                   E-SALWA is your ultimate solution for food ordering and table reservation needs. Our web-based product is accessible via URL or Android® or IOS® Applications, giving you the convenience of ordering food from any restaurant, food point, or fast food chain. With multilingual support, you can easily view menus and deals in your preferred language and even listen to menus in the language of your choice.
                 </span>
               </p>
-              <button onClick={() => navigate("/story")}>Our Menu</button>
+
             </div>
           </div>
         </div>

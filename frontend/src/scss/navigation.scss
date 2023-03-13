@@ -62,7 +62,7 @@ header {
 
         nav {
           display: flex;
-          justify-content: start;
+          justify-content: end;
           align-items: center;
 
           @include lg {

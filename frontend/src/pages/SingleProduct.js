@@ -11,6 +11,7 @@ import getDistance from "geolib/es/getDistance";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import { Skeleton } from "@mui/material";
 import Select from "@mui/material/Select";
 import Header from "../components/Header";
 import { addToCart } from "../Redux/actions/cartActions";
@@ -27,6 +28,7 @@ const SingleProduct = () => {
     const handleChange = (event) => {
         setAge(event.target.value);
     };
+    const [loading, setLoading] = useState(true); // Set initial state to true
     const { id } = useParams();
     const navigate = useNavigate();
     const getAllProducts = async () => {
@@ -35,6 +37,7 @@ const SingleProduct = () => {
             setProductData(data.menuItem);
             setRelatedProducts(data.uniqueItems);
             setQi(data.menuItem.foodPoint.gpsCoordinates);
+            setLoading(false); // Set loading to false when data is fetched
         } catch (error) {
             console.log(error);
         }
@@ -83,102 +86,111 @@ const SingleProduct = () => {
                         <div className="item">
                             <div className="gallery">
                                 <div className="img">
-                                    <img src={productData.image} alt="" />
+                                    {loading ? (
+                                        <Skeleton variant="rectangular" width={400} height={400} />
+                                    ) : (
+                                        <img src={productData.image} alt="" />
+                                    )}
                                 </div>
                             </div>
                         </div>
-                        <div className="item">
-                            <div className="top__detail">
-                                <div className="title">
-                                    <h2 className="category">{productData.type}</h2>
-                                    <h2 className="title__name">{productData.name}</h2>
-                                </div>
-                                <div
-                                    className="description"
-                                    style={{ display: "flex", alignItems: "center", gap: "10px" }}
-                                >
-                                    {productData.description}
-                                </div>
 
-                                <div className="price">
-                                    <h2>${productData.price}</h2>
-
-                                    <div className="qty">
-                                        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                                            <InputLabel
-                                                id="demo-select-small"
-                                                style={{ color: "#fff" }}
-                                            >
-                                                Quantity
-                                            </InputLabel>
-                                            <Select
-                                                labelId="demo-select-small"
-                                                id="demo-select-small"
-                                                value={age}
-                                                label="Age"
-                                                onChange={handleChange}
-                                            >
-                                                <MenuItem value={1}>1</MenuItem>
-                                                <MenuItem value={2}>2</MenuItem>
-                                                <MenuItem value={3}>3</MenuItem>
-                                            </Select>
-                                        </FormControl>
+                        {loading ? (
+                            <Skeleton variant="rectangular" width={400} height={500} />
+                        ) : (
+                            <div className="item">
+                                <div className="top__detail">
+                                    <div className="title">
+                                        <h2 className="category">{productData.type}</h2>
+                                        <h2 className="title__name">{productData.name}</h2>
                                     </div>
+                                    <div
+                                        className="description"
+                                        style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                                    >
+                                        {productData.description}
+                                    </div>
+
+                                    <div className="price">
+                                        <h2>{productData.price}</h2>
+
+                                        <div className="qty">
+                                            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                                                <InputLabel
+                                                    id="demo-select-small"
+                                                    style={{ color: "#fff" }}
+                                                >
+                                                    Quantity
+                                                </InputLabel>
+                                                <Select
+                                                    labelId="demo-select-small"
+                                                    id="demo-select-small"
+                                                    value={age}
+                                                    label="Age"
+                                                    onChange={handleChange}
+                                                >
+                                                    <MenuItem value={1}>1</MenuItem>
+                                                    <MenuItem value={2}>2</MenuItem>
+                                                    <MenuItem value={3}>3</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => {
+                                        addToCartHandler(productData);
+                                        navigate('/cart')
+                                    }}>Add to Cart!</button>
+                                    <div className="rating"> </div>
                                 </div>
-                                <button onClick={() => {
-                                    addToCartHandler(productData);
-                                    navigate('/cart')
-                                }}>Add to Cart!</button>
-                                <div className="rating"> </div>
-                            </div>
-                            <h3
-                                style={{
-                                    fontWeight: "200",
-                                    fontSize: "2rem",
-                                    color: "rgb(254, 64, 56)",
-                                    fontFamily: "'Merienda'",
-                                    fontSize: "22px",
-                                }}
-                            >
-                                Related Items:
-                            </h3>
-                            <div className="quantity">
-                                <div className="qty">
-                                    {relatedProducts?.map((item, index) => {
-                                        return (
-                                            <div
-                                                className="item"
-                                                onClick={() => navigate(`/${item._id}`)}
-                                            >
-                                                <div className="img">
-                                                    <img src={item.image} alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="top">
-                                                        <h3 className="start">{item.name}</h3>
-                                                        <div className="end">
-                                                            {" "}
-                                                            {calculateDistance(
-                                                                parseFloat(qi[0]),
-                                                                parseFloat(qi[1]),
-                                                                parseFloat(item.foodPoint.gpsCoordinates[0]),
-                                                                parseFloat(item.foodPoint.gpsCoordinates[1])
-                                                            )}
+                                <h3
+                                    style={{
+                                        fontWeight: "200",
+                                        fontSize: "2rem",
+                                        color: "rgb(254, 64, 56)",
+                                        fontFamily: "'Merienda'",
+                                        fontSize: "22px",
+                                    }}
+                                >
+                                    Related Items:
+                                </h3>
+                                <div className="quantity">
+                                    <div className="qty">
+                                        {relatedProducts?.map((item, index) => {
+                                            return (
+                                                <div
+                                                    className="item"
+                                                    onClick={() => navigate(`/${item._id}`)}
+                                                >
+                                                    <div className="img">
+                                                        <img src={item.image} alt="" />
+                                                    </div>
+                                                    <div className="details">
+                                                        <div className="top">
+                                                            <h3 className="start">{item.name}</h3>
+                                                            <div className="end">
+                                                                {" "}
+                                                                {calculateDistance(
+                                                                    parseFloat(qi[0]),
+                                                                    parseFloat(qi[1]),
+                                                                    parseFloat(item.foodPoint.gpsCoordinates[0]),
+                                                                    parseFloat(item.foodPoint.gpsCoordinates[1])
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <div className="bottom">
+                                                            <div className="start">{item.price}</div>
+                                                            <div className="end"> {item.foodPoint?.name}</div>
                                                         </div>
                                                     </div>
-                                                    <div className="bottom">
-                                                        <div className="start">${item.price}</div>
-                                                        <div className="end"> {item.foodPoint?.name}</div>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                                            );
+                                        })}
+                                    </div>
 
-                                <div className="buy"></div>
+                                    <div className="buy"></div>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                     <div className="tabs__info">{/* <BasicTabs /> */}</div>
                 </div>

@@ -340,26 +340,19 @@ export const nav = [
         ref: 'nav2',
     },
     {
+        name: 'About',
+        path: '/about',
+        ref: 'nav2',
+    },
+    {
         name: 'Menu',
-        path: 'home#roadmap',
+        path: '/menu',
+        ref: 'nav1',
+    },
+    {
+        name: 'Team',
+        path: '/team',
         ref: 'nav1',
     },
 
-    {
-        name: 'Account ',
-        path: 'home#partner',
-        ref: 'nav4',
-    },
-
-    {
-        name: 'Orders',
-        path: 'home#faq',
-        ref: 'nav4',
-    },
-
-    {
-        name: 'Cart',
-        path: '/cart',
-        ref: 'nav4',
-    },
 ]

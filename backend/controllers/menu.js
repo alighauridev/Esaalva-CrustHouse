@@ -47,6 +47,32 @@ const getMenus = async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 };
+const editMenu = async (req, res) => {
+    try {
+        // Find the menu to update by its ID
+        const menuId = req.params.id;
+        const menu = await Menu.findById(menuId);
+
+        if (!menu) {
+            return res.status(404).json({ message: "Menu not found" });
+        }
+
+        // Update the menu with the new data from the request body
+        menu.name = req.body.name || menu.name;
+        menu.description = req.body.description || menu.description;
+        menu.menuTypes = req.body.menuTypes || menu.menuTypes;
+        menu.items = req.body.items || menu.items;
+
+        // Save the updated menu
+        await menu.save();
+
+        res.json(menu);
+    } catch (error) {
+        // Handle any errors that occur during the update of the menu
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+};
 const getMenuItemsByCategory = async (req, res) => {
     const { category } = req.params;
     try {
@@ -72,7 +98,7 @@ const createMenuItem = async (req, res) => {
             description: req.body.description,
             price: req.body.price,
             image: req.body.image,
-            category: req.body.category,
+            meal: req.body.meal,
             menu: req.body.menu,
         });
 
@@ -121,17 +147,15 @@ const getMenuItemById = async (req, res) => {
 
         // Find all menu items in the database that have the same category and type as the selected menu item, but exclude the selected menu item itself
         const similarItems = await MenuItem.find({
-            category: menuItem.category,
+            name: menuItem.name,
             _id: { $ne: menuItem._id },
         }).populate("foodPoint", "name gpsCoordinates");
         const uniqueItems = [];
         for (const item of similarItems) {
-            const isDuplicate = uniqueItems.some(
-                (uniqueItem) => uniqueItem.name === item.name
-            );
-            if (!isDuplicate) {
-                uniqueItems.push(item);
-            }
+
+
+            uniqueItems.push(item);
+
         }
         // Return the menu item and the similar items as a JSON response
         res.json({ menuItem, uniqueItems });
@@ -141,6 +165,35 @@ const getMenuItemById = async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 };
+const updateMenuItem = async (req, res) => {
+    try {
+        // Find the menu item to be updated
+        const menuItem = await MenuItem.findById(req.params.id);
+
+        if (!menuItem) {
+            return res.status(404).json({ message: "Menu item not found" });
+        }
+
+        // Update the menu item using the request body
+        menuItem.name = req.body.name;
+        menuItem.description = req.body.description;
+        menuItem.price = req.body.price;
+        menuItem.image = req.body.image;
+        menuItem.meal = req.body.meal;
+        menuItem.foodPoint = req.body.foodPoint;
+
+        // Save the updated menu item to the database
+        await menuItem.save();
+
+        // Return the updated menu item as a JSON response
+        res.json(menuItem);
+    } catch (error) {
+        // Handle any errors that occur during the update of the menu item
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+};
+
 
 // exports.getItemById = async (req, res, next) => {
 //     try {
@@ -169,4 +222,6 @@ module.exports = {
     getMenuItems,
     getMenuItemById,
     getMenuItemsByCategory,
+    editMenu,
+    updateMenuItem
 };

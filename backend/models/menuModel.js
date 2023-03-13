@@ -14,7 +14,7 @@ const menuSchema = new Schema({
         type: String,
     },
     menuTypes: [{ type: String, required: true }],
-    categories: [{ type: String, required: true }],
+    // categories: [{ type: String, required: true }],
     items: [
         {
             type: Schema.Types.ObjectId,

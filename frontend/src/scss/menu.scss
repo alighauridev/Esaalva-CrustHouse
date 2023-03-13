@@ -1,7 +1,6 @@
 .menu {
-  margin-bottom: 100px;
   padding: 90px 0;
-  background: #1b1b1b;
+  background: #0d0d0d;
   .heading {
     h1 {
       font-size: 3rem;
@@ -16,9 +15,10 @@
     margin: auto;
   }
   .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr 1fr; */
     grid-gap: 2rem 2rem;
     .item {
       .img {
@@ -35,9 +35,27 @@
         gap: 10px;
         li {
           display: grid;
-          grid-template-columns: 50px auto;
+          grid-template-columns: 2.5fr auto;
           align-items: center;
           gap: 15px;
+          > div {
+            display: grid;
+            grid-template-columns: 50px auto;
+            align-items: center;
+            gap: 15px;
+          }
+          .cart__btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fe4038;
+            padding: 8px 5px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            button {
+            }
+          }
           .start {
             img {
               width: 50px;

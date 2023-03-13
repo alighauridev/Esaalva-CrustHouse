@@ -7,6 +7,8 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { addToCart } from "../Redux/actions/cartActions";
+import { useDispatch } from "react-redux";
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -44,7 +46,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 const MenuItem = ({ item }) => {
     const [expanded, setExpanded] = React.useState("panel1");
-
+    const dispatch = useDispatch();
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
     };
@@ -62,10 +64,7 @@ const MenuItem = ({ item }) => {
                         alt=""
                     />
                 </div>
-                <Accordion
-                    expanded={true}
-                    onChange={handleChange(`panel${item._id}`)}
-                >
+                <Accordion expanded={true} onChange={handleChange(`panel${item._id}`)}>
                     <AccordionSummary
                         aria-controls={`panel${item._id}d-content`}
                         id={`panel${item._id}d-header`}
@@ -79,12 +78,24 @@ const MenuItem = ({ item }) => {
                                     <>
                                         {item.products.map((product, ind) => {
                                             return (
-                                                <li onClick={() => navigate(`/${product._id}`)}>
-                                                    <div className="start">
-                                                        <img src={product.image} alt="" />
+                                                <li>
+                                                    <div onClick={() => navigate(`/${product._id}`)}>
+                                                        <div className="start">
+                                                            <img src={product.image} alt="" />
+                                                        </div>
+                                                        <div className="end">
+                                                            <p>{product.name}</p> <span>{product.price}</span>
+                                                        </div>
                                                     </div>
-                                                    <div className="end">
-                                                        <p>{product.name}</p> <span>${product.price}</span>
+                                                    <div
+                                                        onClick={(e) =>
+                                                            dispatch(
+                                                                addToCart(product._id, Number(e.target.value))
+                                                            )
+                                                        }
+                                                        className="cart__btn"
+                                                    >
+                                                        <button>Add</button>
                                                     </div>
                                                 </li>
                                             );

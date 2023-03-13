@@ -1,5 +1,5 @@
 const FoodPoint = require("../models/FoodPointModel");
-
+const MenuItem = require("../models/MenuItemModel");
 const foodPointController = {};
 
 foodPointController.createFoodPoint = async (req, res) => {
@@ -51,17 +51,65 @@ foodPointController.getFoodPointById = async (req, res) => {
             const filteredProducts = foodPoint.menu.items.filter(
                 (product) => product.type === type
             );
+            if (filteredProducts.length === 0) {
+                return null; // Filter out categories with no products
+            }
             return {
                 type,
                 products: filteredProducts,
             };
-        })
+        }).filter(Boolean); // Filter out null values
 
         res.send({ name: foodPoint.name, filterProducts });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 };
+
+
+foodPointController.getProductsByMealAndFoodPointId = async (req, res) => {
+    const { mealType } = req.query;
+    const { foodPointId } = req.params;
+
+    if (!['Breakfast', 'Lunch', 'Dinner'].includes(mealType)) {
+        return res.status(400).send({ message: 'Invalid meal type' });
+    }
+
+    try {
+        const foodPoint = await FoodPoint.findById(foodPointId).populate({
+            path: "menu",
+            populate: {
+                path: "items",
+                model: "MenuItem",
+                match: { meal: mealType }
+            }
+        });
+
+        if (!foodPoint) {
+            return res.status(404).send({ message: "Food point not found" });
+        }
+
+        const products = foodPoint.menu.items.filter((item) => item.meal === mealType);
+
+        const filterProducts = foodPoint.menu.menuTypes.map((type) => {
+            const filteredProducts = products.filter(
+                (product) => product.type === type
+            );
+            if (filteredProducts.length === 0) {
+                return null; // Filter out categories with no products
+            }
+            return {
+                type,
+                products: filteredProducts,
+            };
+        }).filter(Boolean); // Filter out null values
+
+        res.send({ name: foodPoint.name, filterProducts });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+};
+
 
 foodPointController.updateFoodPoint = async (req, res) => {
     const { name, location, phone, email, owner, gpsCoordinates, services } = req.body;

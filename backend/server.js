@@ -10,7 +10,7 @@ process.on("uncaughtException", (err) => {
     process.exit(1);
 });
 connectDatabase();
-// populate()
+// populate();
 cloudinary.config({
     cloud_name: "dipcjbjho",
     api_key: "884152813132763",
