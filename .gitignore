@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/client
 
 # local env files
 /backend/config/config.env
