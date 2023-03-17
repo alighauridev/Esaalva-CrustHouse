@@ -9,36 +9,43 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { PRODUCT_LIST_SUCCESS } from "../Redux/constants/productConstants";
 const Menu = () => {
     const [productData, setProductData] = useState([]);
     const [filterData, setfilterData] = useState([]);
     const [categories, setCategories] = useState([]);
     const [menuType, setMenuType] = useState([]);
     const [menu, setMenu] = useState();
-    const [meal, setMeal] = useState("")
+    const [meal, setMeal] = useState("");
     const [loading, setLoading] = useState(true); // Set initial state to true
     const cartProducts = useSelector((state) => state.Cart.cartItems);
+    const products = useSelector((state) => state.Products.products);
     const [pointName, setPointName] = useState("");
+    const dispatch = useDispatch();
     const getAllProducts = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             if (meal === "") {
-
                 const { data } = await axios.get(
                     "/api/v1/foodpoints/63f4d70e88b6eaa37ff01664"
                 );
                 setPointName(data.name);
+                dispatch({
+                    type: PRODUCT_LIST_SUCCESS,
+                    payload: data,
+                });
                 setProductData(data.filterProducts);
                 setLoading(false); // Set loading to false when data is fetched
-
-
             } else {
                 try {
                     const { data } = await axios.get(
                         `/api/v1/foodpoints/63f4d70e88b6eaa37ff01664/products?mealType=${meal}`
                     );
-
+                    dispatch({
+                        type: PRODUCT_LIST_SUCCESS,
+                        payload: data,
+                    });
                     setProductData(data.filterProducts);
                     setLoading(false); // Set loading to false when data is fetched
                 } catch (error) {
@@ -49,32 +56,21 @@ const Menu = () => {
             console.log(error);
         }
     };
-    const getProductsByMeal = async () => {
 
-    };
 
     useEffect(() => {
         getAllProducts();
     }, [meal]);
-    useEffect(() => {
-        getProductsByMeal();
-    }, [meal]);
-
 
     return (
         <>
             <Header />
             <section className="menu" id="menu">
-
-                <div className="heading" style={{ position: 'relative' }}>
+                <div className="heading" style={{ position: "relative" }}>
                     <h1>{pointName} MENU</h1>
-                    <div style={{ position: 'absolute', right: '5%', top: "10px", }}>
-
+                    <div style={{ position: "absolute", right: "5%", top: "10px" }}>
                         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                            <InputLabel
-                                id="demo-select-small"
-                                style={{ color: "#fff" }}
-                            >
+                            <InputLabel id="demo-select-small" style={{ color: "#fff" }}>
                                 Meal
                             </InputLabel>
                             <Select
@@ -99,14 +95,18 @@ const Menu = () => {
                                 {" "}
                                 {[1, 2, 3, 4, 5, 6].map((item, index) => {
                                     return (
-                                        <Skeleton variant="rectangular" width={"100%"} height={400} />
+                                        <Skeleton
+                                            variant="rectangular"
+                                            width={"100%"}
+                                            height={400}
+                                        />
                                     );
                                 })}
                             </>
                         ) : (
                             <>
                                 {" "}
-                                {productData.map((item, index) => {
+                                {products.map((item, index) => {
                                     return <MenuItemm id={index} item={item} />;
                                 })}
                             </>
