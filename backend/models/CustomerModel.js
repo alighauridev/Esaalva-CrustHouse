@@ -13,12 +13,12 @@ const customerSchema = new Schema({
         numberOfPeople: { type: Number },
         expectedTimeOfArrival: { type: Date },
     },
-    paymentDetails: {
-        method: { type: String, required: true },
-        amount: { type: Number, required: true },
-        status: { type: String },
-        transactionId: { type: String },
-    },
+    // paymentDetails: {
+    //     method: { type: String, required: true },
+    //     amount: { type: Number, required: true },
+    //     status: { type: String },
+    //     transactionId: { type: String },
+    // },
 });
 
 const Customer = mongoose.model('Customer', customerSchema);

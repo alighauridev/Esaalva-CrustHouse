@@ -24,7 +24,7 @@ import { addToCart, removeCart } from "../Redux/actions/cartActions";
 export default function Cart() {
     const cartProducts = useSelector((state) => state.Cart.cartItems);
     const [age, setAge] = React.useState(1);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const handleChange = (event) => {
         setAge(event.target.value);
     };
@@ -33,8 +33,8 @@ export default function Cart() {
         .toFixed(2);
 
     const deleteCart = (id) => {
-        dispatch(removeCart(id))
-    }
+        dispatch(removeCart(id));
+    };
     return (
         <>
             <Header bg={"#fff"} />
@@ -99,25 +99,33 @@ export default function Cart() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="d-flex flex-row align-items-center">
-                                                                    <div
-                                                                        className="quantity"
-
-                                                                    >
-                                                                        <select value={item.qty} id="" style={{
-                                                                            wordWrap: 'normal',
-                                                                            color: 'black',
-                                                                            border: '1px solid black',
-                                                                            marginRight: '10px',
-                                                                            borderRadius: '4px'
-                                                                        }} onChange={(e) =>
-                                                                            dispatch(
-                                                                                addToCart(item.product, Number(e.target.value))
-                                                                            )
-                                                                        }>
+                                                                    <div className="quantity">
+                                                                        <select
+                                                                            value={item.qty}
+                                                                            id=""
+                                                                            style={{
+                                                                                wordWrap: "normal",
+                                                                                color: "black",
+                                                                                border: "1px solid black",
+                                                                                marginRight: "10px",
+                                                                                borderRadius: "4px",
+                                                                            }}
+                                                                            onChange={(e) =>
+                                                                                dispatch(
+                                                                                    addToCart(
+                                                                                        item.product,
+                                                                                        Number(e.target.value)
+                                                                                    )
+                                                                                )
+                                                                            }
+                                                                        >
                                                                             {[...Array(7).keys()].map((x) => (
-                                                                                <option style={{ color: 'black' }} value={x + 1} key={x + 1}>
+                                                                                <option
+                                                                                    style={{ color: "black" }}
+                                                                                    value={x + 1}
+                                                                                    key={x + 1}
+                                                                                >
                                                                                     {x + 1}
-
                                                                                 </option>
                                                                             ))}
                                                                         </select>
@@ -138,7 +146,6 @@ export default function Cart() {
                                                                         style={{ color: "#000" }}
                                                                         onClick={() => deleteCart(item.product)}
                                                                     />
-
                                                                 </div>
                                                             </div>
                                                         </MDBCardBody>

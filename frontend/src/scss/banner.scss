@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 .banner {
   height: 102vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url(../assets/banner2.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-size: cover;
   .container {
     display: grid;
     max-width: 700px;

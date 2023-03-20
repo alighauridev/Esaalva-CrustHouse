@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Customer'
     },
     foodPoint: {
         type: Schema.Types.ObjectId,
@@ -25,7 +25,12 @@ const orderSchema = new Schema({
         }
     }],
     table: {
-        type: Number
+        type: String,
+        required: true
+    },
+    place: {
+        type: String,
+        required: true
     },
     expectedTime: {
         type: Date,
