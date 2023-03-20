@@ -1,0 +1,261 @@
+this is the error 
+
+"failed to load resource: net::ERR_FAILED
+For the line of the axios.put in my React file on VS code"
+
+here is the code 
+
+delete function
+
+
+// function to delete a product based on the id of the product
+
+const deleteProduct = (product) => {
+
+if (window.confirm("Are you sure you want to delete?")) {
+
+axios.delete(http://localhost:8080/product/${product.id}`)
+
+}
+
+.then(response => {
+
+console.log(response);
+
+let copy = products.filter((item) => item !== product);
+
+set Products([...copy]);
+
+})
+
+.catch(error => {
+
+console.log(error);
+
+});
+
+
+edit function
+
+
+
+
+
+//function to edit product, if the current product is being edited, it sets the index active and the flag to be true
+
+const editProduct = (index) => {
+
+const product = products [index];
+
+};
+
+setProduct Name (product.productName);
+
+setProductDate(product.product ExpiryDate);
+
+setActive(index);
+
+setEdit(true);
+
+//updating the backend as well
+
+axios.put(http://localhost:8080/product/${product.id}`, {
+
+productName: productName,
+
+productExpiryDate: product Expiry Date
+
+})
+
+.then(response => {
+
+console.log(response);
+
+const updated Products = [...products];
+
+updated Products[index] = response.data;
+
+setProducts (updatedProducts);
+
+})
+
+.catch(error => {
+
+console.log(error);
+
+})
+
+
+AddFunction 
+
+
+
+
+//The function to add the product details and to set the form to empty after adding them
+
+const addProduct = (e) => {
+
+e.preventDefault();
+
+const product = {
+
+productName,
+
+productExpiry Date
+
+if(edit) {
+
+//update product list
+
+let copy = products;
+
+Object.assign(copy[active], product);
+
+setProducts([...copy]);
+
+setEdit(false);
+
+setActive(null);
+
+window.alert(${productName} is successfully updated");
+
+}else{
+
+//add product
+
+setProducts([...products, product]);
+
+window.alert(${productName} is successfully added");
+
+setProduct Name ("")
+
+setProductDate("")
+
+console.log(product)
+
+axios.post('http://localhost:8080/product', product)
+
+.then(response => {
+
+console.log(response)
+
+})
+
+.catch(error => {
+
+console.log(error)
+
+})
+
+
+springboot 1
+
+
+28 @RestController
+
+29 public class Product Controller {
+
+
+
+ProductRepository productRepository;
+
+37 // @CrossOrigin (origins = "http://localhost:3000/product")
+
+
+//Get All Products
+
+400 @GetMapping ("/product")
+
+
+
+@Autowired
+
+Product Service product Service;
+
+@Autowired
+
+public List<ProductModel> getProducts () {
+
+return product Service.getProducts ();
+
+}
+
+@PostMapping ("/product")
+
+public ResponseEntity<Optional<ProductModel>> addProduct (@RequestBody Product DTO newProductDTO) {
+
+}
+
+if (newProduct DTO.getProductName () == null
+
+|| newProduct DTO.getProductExpiry Date () == null) {
+
+return new ResponseEntity<> (Optional.ofNullable(null), HttpStatus.BAD_REQUEST) ;
+
+}
+
+Product Model newProduct = new Product Model (newProduct DTO.getID (), newProduct DTO.get Product Name (),
+
+product Service.addProduct (newProduct);
+
+return new ResponseEntity<> (Optional.ofNullable (newProduct), HttpStatus. CREATED) ;
+
+
+
+springboot 2
+
+
+
+// Get Product by ID
+
+@GetMapping ("/product/{id}")
+
+public ResponseEntity<ProductModel>
+
+}
+
+getProductById(@PathVariable (value = "id") Long productId)
+
+throws ResourceNotFoundException {
+
+Product Model product = product Service.findByID (productId)
+
+.orElse Throw (() -> new ResourceNotFoundException ("ProductModel", "id", productId));
+
+return ResponseEntity.ok () .body (product);
+
+@PutMapping ("/product/{id}")
+
+public ResponseEntity<ProductModel> edit Product (@PathVariable long id, @RequestBody Product Model product Details) {
+
+Product Model editProduct = product Service.findByID (id)
+
+.orElse Throw (() -> new ResourceNotFoundException ("ProductModel", "id", id));
+
+}
+
+edit Product.setProduct Name (product Details.getProductName());
+
+edit
+
+Product.setProductExpiryDate (product Details.getProductExpiryDate());
+
+final ProductModel updatedProduct = productRepository.save (edit Product);
+
+return ResponseEntity.ok (updated Product);
+
+}
+
+//Delete a Product by ID
+
+@DeleteMapping ("/product/{id}")
+
+public String delete Product (@PathVariable (value
+
+product Service.delete Product (Id);
+
+return "Product Deleted";
+
+=
+
+"id") long Id) {
