@@ -10,7 +10,7 @@ import {
     MDBRow,
     MDBTypography,
 } from "mdb-react-ui-kit";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
@@ -20,10 +20,13 @@ import Select from "@mui/material/Select";
 import Header from "../components/Header";
 import { toast } from "react-toastify";
 import { addToCart, removeCart } from "../Redux/actions/cartActions";
+import CustomerForm from "../components/CustomerForm";
 
 export default function Cart() {
     const cartProducts = useSelector((state) => state.Cart.cartItems);
+    const userInfo = useSelector((state) => state.User.userInfo);
     const [age, setAge] = React.useState(1);
+    const [open, setOpen] = useState();
     const dispatch = useDispatch();
     const handleChange = (event) => {
         setAge(event.target.value);
@@ -35,10 +38,20 @@ export default function Cart() {
     const deleteCart = (id) => {
         dispatch(removeCart(id));
     };
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        if (userInfo._id) {
+            alert('green');
+        }
+        else {
+            setOpen(true);
+        }
+    }
     return (
         <>
             <Header bg={"#fff"} />
-
+            <CustomerForm open={open} setOpen={setOpen} />
             <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
                 <MDBContainer className="py-5 h-100">
                     <MDBRow className="justify-content-center align-items-center h-100">
@@ -242,6 +255,22 @@ export default function Cart() {
                                                                 </FormControl>
                                                             </MDBCol>
                                                         </MDBRow>
+                                                        <MDBRow className="mb-4 time__input">
+                                                            <FormControl sx={{ m: 1, minWidth: 120 }} size="small" >
+                                                                <MDBInput
+                                                                    className="mb-4"
+                                                                    label="Expected Time"
+                                                                    type="time"
+                                                                    size="lg"
+                                                                    minLength="19"
+                                                                    maxLength="19"
+                                                                    placeholder="1234 5678 9012 3457"
+                                                                    contrast
+                                                                />
+
+                                                            </FormControl>
+
+                                                        </MDBRow>
                                                     </form>
 
                                                     <hr />
@@ -264,9 +293,7 @@ export default function Cart() {
                                                     <MDBBtn color="info" block size="lg">
                                                         <div
                                                             className="d-flex justify-content-between"
-                                                            onClick={() =>
-                                                                toast.success("Order Created Successfully!")
-                                                            }
+                                                            onClick={submitHandler}
                                                         >
                                                             <span>{total}.00</span>
                                                             <span>

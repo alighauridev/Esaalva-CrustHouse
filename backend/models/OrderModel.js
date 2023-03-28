@@ -28,14 +28,11 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-    place: {
-        type: String,
-        required: true
-    },
-    expectedTime: {
-        type: Date,
-        required: true
-    },
+
+    // expectedTime: {
+    //     type: Date,
+    //     required: true
+    // },
     orderTime: {
         type: Date,
         default: Date.now

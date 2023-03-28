@@ -20,7 +20,7 @@ const RootReducer = combineReducers({
   ProductCreateReview: productCreateReviewReducer,
   Cart: cartReducer,
   Checkout: shippingDetailsReducer,
-  UserLogin: userLoginReducer,
+  User: userLoginReducer,
   UserUpdate: userUpdateReducer,
   UserRegister: userRegisterReducer,
   OrderCreate: orderCreateReducer,
