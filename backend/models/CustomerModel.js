@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const customerSchema = new Schema({
     name: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: Number, required: true },
     foodPoint:
     {
         type: Schema.Types.ObjectId,

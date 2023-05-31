@@ -3,10 +3,10 @@ html {
   scroll-behavior: smooth;
 }
 .prod__info {
+  background: #0d0d0d !important;
   .container {
     max-width: 1200px;
-    margin: 30px auto;
-
+    margin: 30px auto 0;
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;

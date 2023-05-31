@@ -79,8 +79,9 @@ const SingleProduct = () => {
 
     return (
         <>
-            <Header />
             <section className="prod__info">
+                <Header />
+
                 <div className="container">
                     <div className="grid">
                         <div className="item">
@@ -159,7 +160,7 @@ const SingleProduct = () => {
                                             return (
                                                 <div
                                                     className="item"
-                                                    onClick={() => navigate(`/${item._id}`)}
+
                                                 >
                                                     <div className="img">
                                                         <img src={item.image} alt="" />

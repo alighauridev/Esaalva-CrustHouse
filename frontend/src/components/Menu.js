@@ -64,8 +64,9 @@ const Menu = () => {
 
     return (
         <>
-            <Header />
+
             <section className="menu" id="menu">
+                <Header />
                 <div className="heading" style={{ position: "relative" }}>
                     <h1>{pointName} MENU</h1>
                     <div style={{ position: "absolute", right: "5%", top: "10px" }}>

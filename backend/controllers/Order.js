@@ -23,6 +23,16 @@ const getOrderById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+// Get single order by ID
+const getOrdersByUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const orders = await Order.find({ user: userId });
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 // Create new order
 
@@ -57,7 +67,8 @@ const createOrder = async (req, res) => {
             user: req.body.user,
             items: req.body.items,
             status: req.body.status,
-            tables: assignedTables.map(table => table._id)
+            tables: assignedTables.map(table => table._id),
+            totalPrice: req.body.totalPrice
         });
         const newOrder = await order.save();
 
@@ -68,20 +79,7 @@ const createOrder = async (req, res) => {
 };
 
 
-// Update order status by ID
-const updateOrderStatus = async (req, res) => {
-    try {
-        const order = await Order.findById(req.params.id);
-        if (!order) {
-            return res.status(404).json({ message: "Order not found" });
-        }
-        order.status = req.body.status;
-        const updatedOrder = await order.save();
-        res.status(200).json(updatedOrder);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+
 
 // Delete order by ID
 const deleteOrder = async (req, res) => {
@@ -97,10 +95,37 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+// Update order status by ID
+const updateOrderStatus = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id).populate('tables');
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+        const previousStatus = order.status;
+        order.status = req.body.status;
+        const updatedOrder = await order.save();
+
+        // Check if the status was updated to 'Completed'
+        if (previousStatus !== 'Completed' && req.body.status === 'Completed') {
+            // Update the tables' availability
+            for (const table of order.tables) {
+                await Table.findByIdAndUpdate(table._id, { $set: { isAvailable: true } });
+            }
+        }
+
+        res.status(200).json(updatedOrder);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
     updateOrderStatus,
     deleteOrder,
+    getOrdersByUser
 };

@@ -1,0 +1,14 @@
+@import "./media.scss";
+section.vh-90.h-custom.order__table {
+  height: 100%;
+  min-height: 90vh;
+}
+.order__table {
+  > div {
+    > h2 {
+      color: #2d2d2d;
+      margin: 30px 0 20px;
+      font-family: "Oswald" !important;
+    }
+  }
+}

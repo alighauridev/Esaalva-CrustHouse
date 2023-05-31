@@ -52,12 +52,13 @@ function CustomerForm({ open, setOpen, total }) {
     const handlerSubmit = async (event) => {
 
         event.preventDefault();
-        dispatch(register(name, phone))
+        dispatch(register(name, phone));
+        setOpen(false)
 
     };
 
     return (
-        <div>
+        <div className="customer__modal">
             <Modal
                 open={open}
                 onClose={handleClose}

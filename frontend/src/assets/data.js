@@ -354,5 +354,10 @@ export const nav = [
         path: '/team',
         ref: 'nav1',
     },
+    {
+        name: 'Orders',
+        path: '/order',
+        ref: 'nav1',
+    },
 
 ]

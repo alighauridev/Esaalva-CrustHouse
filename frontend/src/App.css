@@ -14,15 +14,12 @@ sans-serif; */
   font-family: resteraunt;
   src: url(./scss/font/CafeFrancoise-EapP9.ttf);
 }
-.Toastify__toast-body>div:last-child {
+.Toastify__toast-body > div:last-child {
   word-break: break-word;
   flex: 1 1;
   color: black !important;
 }
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
 
-  /* border-color: white !important  ; */
-}
 .time__input input.form-control.form-control-lg.mb-4 {
   margin-bottom: 0 !important;
 }
@@ -122,12 +119,11 @@ sans-serif; */
   border-bottom: none !important;
 }
 body {
-  background: #000;
-  background-image: url(./assets/banner.jpg);
-  background: #0d0d0d !important;
+  background: #fff;
+  /* background-image: url(./assets/banner.jpg); */
   background-size: cover;
 }
-ul{
+ul {
   margin-left: 0 !important;
   margin-top: 0 !important;
   padding-left: 0 !important;
@@ -145,8 +141,8 @@ h2 {
   font-weight: 700 !important;
 }
 p.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
-      font-family: 'Merienda';
-        font-size: 20px;
+  font-family: "Merienda";
+  font-size: 20px;
 }
 div#panel1d-header p {
   font-family: "Merienda";
@@ -195,10 +191,10 @@ div#panel1d-header p {
   flex-direction: row-reverse;
 }
 .css-1646qb7-MuiAccordionDetails-root {
-    padding: 8px 16px 16px;
-      padding: 16px;
-      border-top: 1px solid #fe4038 !important;
-      background: #111111 !important;
+  padding: 8px 16px 16px;
+  padding: 16px;
+  border-top: 1px solid #fe4038 !important;
+  background: #111111 !important;
 }
 .css-v84d5j-MuiSvgIcon-root {
   -webkit-user-select: none;
@@ -219,18 +215,13 @@ div#panel1d-header p {
   fill: #fe4038 !important;
 }
 .css-j1461 {
-
   border-radius: 6px !important;
 
   padding: 8px;
 }
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-
   height: 1.1em !important;
-
 }
 .css-j1461 {
-
   width: 480px !important;
-
 }

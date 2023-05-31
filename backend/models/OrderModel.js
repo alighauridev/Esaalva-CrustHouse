@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-    customer: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'Customer'
     },
@@ -24,10 +24,10 @@ const orderSchema = new Schema({
             required: true
         }
     }],
-    table: {
+    tables: [{
         type: String,
         required: true
-    },
+    }],
 
     // expectedTime: {
     //     type: Date,
@@ -39,16 +39,16 @@ const orderSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Confirmed', 'Preparing', 'Ready', 'Delivered'],
+        enum: ['Pending', 'Confirmed', 'Preparing', 'Ready', 'Completed'],
         default: 'Pending'
     },
-    paymentMethod: {
-        type: String,
-        enum: ['Credit Card', 'Debit Card', 'Mobile Banking', 'Cash On Delivery'],
-        required: true
-    },
+    // paymentMethod: {
+    //     type: String,
+    //     enum: ['Credit Card', 'Debit Card', 'Mobile Banking', 'Cash On Delivery'],
+    //     required: true
+    // },
     totalPrice: {
-        type: Number,
+        type: String,
         required: true
     }
 });

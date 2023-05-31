@@ -90,7 +90,7 @@ const MenuItem = ({ item }) => {
                                                     <div
                                                         onClick={(e) =>
                                                             dispatch(
-                                                                addToCart(product._id, Number(e.target.value))
+                                                                addToCart(product._id, 1)
                                                             )
                                                         }
                                                         className="cart__btn"

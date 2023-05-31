@@ -6,3 +6,48 @@
     z-index: 0;
     background-color: rgb(228 228 228) !important;
 }
+.MuiFormControl-root.css-3cjm13-MuiFormControl-root {
+    margin: 0 !important;
+}
+
+.cart__page .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+   
+    border-color: rgb(255 255 255) !important;
+}
+.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+    height: auto;
+    min-height: 1.6075em !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+p.fw-bold.mb-1 {
+    color: #4f4f4f;
+}
+p.fw-normal.mb-1 {
+        color: #4f4f4f;
+}
+.order__th th{
+    color: #4f4f4f;
+    
+}
+.order__table td{
+    color: #4f4f4f;
+    
+}
+h5#exampleModalLabel {
+    color: black;
+}
+p.fw-bold.mb-0 {
+    color: black;
+}
+.d-flex.justify-content-between *{
+    color: black;
+}
+.customer__modal fieldset {
+    border-color: rgb(0, 0, 0) !important;
+}
+.details__card *{
+    color: #fff !important;
+
+}

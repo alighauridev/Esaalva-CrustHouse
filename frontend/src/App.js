@@ -10,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Menu from "./components/Menu";
 import Team from "./components/Team";
 import AboutNft from "./components/AboutNft";
+import Order from "./pages/Order";
+import EasyPaisaForm from "./pages/EasyPaisaForm";
+import JazzCashForm from "./pages/JazzCashForm";
 function App() {
   return (
     <>
@@ -60,6 +63,30 @@ function App() {
           element={
             <ProtectedRouter>
               <Cart />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            <ProtectedRouter>
+              <Order />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRouter>
+              <EasyPaisaForm />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/jazzcash"
+          element={
+            <ProtectedRouter>
+              <JazzCashForm />
             </ProtectedRouter>
           }
         />

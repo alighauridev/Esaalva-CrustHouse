@@ -58,7 +58,9 @@ export const register = (name, phone) => async (dispatch) => {
             foodPoint: "63f4d70e88b6eaa37ff01664",
         });
 
-
+        if (data) {
+            toast.success("Profile has updated!");
+        }
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 

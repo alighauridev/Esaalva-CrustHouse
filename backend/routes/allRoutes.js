@@ -47,17 +47,40 @@ router.get("/menu-itemm/:category", menuController.getMenuItemsByCategory);
 // FoodPoint routes
 router.get("/foodpoints", foodPointController.getAllFoodPoints);
 router.get("/foodpoints/:id", foodPointController.getFoodPointById);
-router.get("/foodpoints/:foodPointId/products", foodPointController.getProductsByMealAndFoodPointId);
+router.get(
+    "/foodpoints/:foodPointId/products",
+    foodPointController.getProductsByMealAndFoodPointId
+);
 router.post("/foodpoints", foodPointController.createFoodPoint);
 router.put("/foodpoints/:id", foodPointController.updateFoodPoint);
 router.delete("/foodpoints/:id", foodPointController.deleteFoodPoint);
 
 // order routes
 router.get("/order", orderController.getAllOrders);
-router.get("/order/:id", orderController.getOrderById);
+router.get("/order/:id", orderController.getOrdersByUser);
 router.post("/order", orderController.createOrder);
 router.put("/order/:id", orderController.updateOrderStatus);
 router.delete("/order/:id", orderController.deleteOrder);
 
 // Export router
+// easypaisa integration
+
+router.post("/easypaisa/initiate-transaction", async (req, res) => {
+    const { signature, request } = req.body;
+
+    if (!signature || !request) {
+        return res
+            .status(400)
+            .json({ message: "Signature and request are required" });
+    }
+
+    const response = await initiateTransaction(signature, request);
+
+    if (!response) {
+        return res.status(500).json({ message: "Error initiating transaction" });
+    }
+
+    return res.json(response);
+});
+
 module.exports = router;

@@ -11,25 +11,28 @@ import {
     MDBTypography,
 } from "mdb-react-ui-kit";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Header from "../components/Header";
 import { toast } from "react-toastify";
-import { addToCart, removeCart } from "../Redux/actions/cartActions";
+import { addToCart, clearCart, removeCart } from "../Redux/actions/cartActions";
 import CustomerForm from "../components/CustomerForm";
-
+import axios from "axios";
+import "../scss/cart.scss"
 export default function Cart() {
     const cartProducts = useSelector((state) => state.Cart.cartItems);
-    const userInfo = useSelector((state) => state.User.userInfo);
-    const [age, setAge] = React.useState(1);
+    const user = useSelector((state) => state.User);
+    const [type, setType] = useState("dining");
+    const [people, setPeople] = useState(1);
     const [open, setOpen] = useState();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setType(event.target.value);
     };
     const total = cartProducts
         .reduce((a, i) => a + i.qty * i.price, 0)
@@ -38,21 +41,44 @@ export default function Cart() {
     const deleteCart = (id) => {
         dispatch(removeCart(id));
     };
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
-        if (userInfo._id) {
-            alert('green');
-        }
-        else {
+        if (user.userInfo) {
+            const { data } = await axios.post("/api/v1/order", {
+                user: user.userInfo._id,
+                foodPoint: user.userInfo.foodPoint,
+                items: cartProducts.map((ite, ind) => {
+                    return {
+                        item: ite.product,
+                        quantity: ite.qty,
+                        price: ite.price,
+                    };
+                }),
+                expectedNumberOfGuests: people,
+                tableType: type,
+                status: "Pending",
+                totalPrice: total,
+            });
+
+            if (data) {
+                toast.success("Order Confirmed!");
+                dispatch(clearCart());
+                navigate("/order");
+            }
+        } else {
             setOpen(true);
         }
-    }
+    };
+
     return (
         <>
             <Header bg={"#fff"} />
             <CustomerForm open={open} setOpen={setOpen} />
-            <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
+            <section
+                className="h-100 h-custom cart__page"
+                style={{ backgroundColor: "#eee" }}
+            >
                 <MDBContainer className="py-5 h-100">
                     <MDBRow className="justify-content-center align-items-center h-100">
                         <MDBCol>
@@ -168,23 +194,23 @@ export default function Cart() {
                                         </MDBCol>
 
                                         <MDBCol lg="5">
-                                            <MDBCard className="bg-primary text-white rounded-3">
+                                            <MDBCard className="bg-primary text-white rounded-3 details__card">
                                                 <MDBCardBody>
                                                     <div className="d-flex justify-content-between align-items-center mb-4">
                                                         <MDBTypography tag="h5" className="mb-0">
-                                                            Customer details
+                                                            Reserve A Table
                                                         </MDBTypography>
-                                                        <MDBCardImage
+                                                        {/* <MDBCardImage
                                                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
                                                             fluid
                                                             className="rounded-3"
                                                             style={{ width: "45px" }}
                                                             alt="Avatar"
-                                                        />
+                                                        /> */}
                                                     </div>
 
                                                     <form className="mt-1">
-                                                        <MDBInput
+                                                        {/* <MDBInput
                                                             className="mb-4"
                                                             label=" Name"
                                                             type="text"
@@ -201,7 +227,7 @@ export default function Cart() {
                                                             maxLength="19"
                                                             placeholder="1234 5678 9012 3457"
                                                             contrast
-                                                        />
+                                                        /> */}
 
                                                         <MDBRow className="mb-4">
                                                             <MDBCol md="6">
@@ -218,45 +244,40 @@ export default function Cart() {
                                                                     <Select
                                                                         labelId="demo-select-small"
                                                                         id="demo-select-small"
-                                                                        value={age}
+                                                                        value={type}
                                                                         label="Age"
                                                                         onChange={handleChange}
                                                                     >
-                                                                        <MenuItem value={1}>dinning</MenuItem>
-                                                                        <MenuItem value={2}>indoor</MenuItem>
-                                                                        <MenuItem value={3}>outdoor</MenuItem>
-                                                                        <MenuItem value={3}>roof-top</MenuItem>
+                                                                        <MenuItem value={"dining"}>dining</MenuItem>
+                                                                        <MenuItem value={"outdoor"}>
+                                                                            outdoor
+                                                                        </MenuItem>
+                                                                        <MenuItem value={"rooftop"}>
+                                                                            rooftop
+                                                                        </MenuItem>
                                                                     </Select>
                                                                 </FormControl>
                                                             </MDBCol>
                                                             <MDBCol md="6">
-                                                                <FormControl
-                                                                    sx={{ m: 1, minWidth: "100%" }}
-                                                                    size="small"
-                                                                >
-                                                                    <InputLabel
-                                                                        id="demo-select-small"
-                                                                        style={{ color: "#fff" }}
-                                                                    >
-                                                                        Table No
-                                                                    </InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-select-small"
-                                                                        id="demo-select-small"
-                                                                        value={age}
-                                                                        label="Age"
-                                                                        onChange={handleChange}
-                                                                    >
-                                                                        <MenuItem value={1}>1</MenuItem>
-                                                                        <MenuItem value={2}>2</MenuItem>
-                                                                        <MenuItem value={3}>3</MenuItem>
-                                                                        <MenuItem value={3}>4</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
+                                                                <MDBInput
+                                                                    className="mb-4"
+                                                                    label=" Expected People"
+                                                                    type="Number"
+                                                                    size="lg"
+                                                                    placeholder=" Expected People"
+                                                                    contrast
+                                                                    value={people}
+                                                                    onChange={(e) => setPeople(e.target.value)}
+                                                                    max={9}
+                                                                    min={1}
+                                                                />
                                                             </MDBCol>
                                                         </MDBRow>
-                                                        <MDBRow className="mb-4 time__input">
-                                                            <FormControl sx={{ m: 1, minWidth: 120 }} size="small" >
+                                                        {/* <MDBRow className="mb-4 time__input">
+                                                            <FormControl
+                                                                sx={{ m: 1, minWidth: 120 }}
+                                                                size="small"
+                                                            >
                                                                 <MDBInput
                                                                     className="mb-4"
                                                                     label="Expected Time"
@@ -267,10 +288,8 @@ export default function Cart() {
                                                                     placeholder="1234 5678 9012 3457"
                                                                     contrast
                                                                 />
-
                                                             </FormControl>
-
-                                                        </MDBRow>
+                                                        </MDBRow> */}
                                                     </form>
 
                                                     <hr />
@@ -295,9 +314,9 @@ export default function Cart() {
                                                             className="d-flex justify-content-between"
                                                             onClick={submitHandler}
                                                         >
-                                                            <span>{total}.00</span>
+                                                            <span>{total}</span>
                                                             <span>
-                                                                Checkout{" "}
+                                                                Confirm Order{" "}
                                                                 <i className="fas fa-long-arrow-alt-right ms-2"></i>
                                                             </span>
                                                         </div>

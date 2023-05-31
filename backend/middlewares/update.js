@@ -1,6 +1,6 @@
-const Restaurant = require('../models/restaurantModel');
-const Menu = require('../models/menuModel');
-const Item = require('../models/productModel');
+const Restaurant = require("../models/restaurantModel");
+const Menu = require("../models/menuModel");
+const Item = require("../models/productModel");
 
 // Define the middleware function
 const updateMenuAndItems = function (next) {
@@ -49,5 +49,4 @@ const updateMenuAndItems = function (next) {
     });
 };
 
-
-module.exports = updateMenuAndItems
+module.exports = updateMenuAndItems;

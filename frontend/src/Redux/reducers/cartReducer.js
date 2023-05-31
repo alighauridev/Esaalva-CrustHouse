@@ -30,13 +30,11 @@ export const cartReducer = (state = { cartItems: [] }, { type, payload }) => {
         ...state,
         cartItems: state.cartItems.filter((x) => x.product !== payload),
       };
-    case CART_CLEAR_ITEMS:
-      toast.success("Item cleared");
+    case CART_CLEAR_ITEMS: // Add this case
       return {
         ...state,
         cartItems: [],
       };
-
     default:
       return state;
   }

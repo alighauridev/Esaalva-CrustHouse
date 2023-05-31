@@ -1,0 +1,64 @@
+@import "./media.scss";
+.CheckoutForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  background: white;
+}
+
+.CheckoutForm h2 {
+  margin-bottom: 1rem;
+}
+
+.CheckoutForm button {
+  background-color: #5469d4;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: background-color 0.2s;
+}
+
+.CheckoutForm button:hover {
+  background-color: #3f4fb7;
+}
+
+.CheckoutForm button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.stripe-card-element {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+.CheckoutForm input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+
+.CheckoutForm label {
+  display: block;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.CheckoutForm .stripe-card-element {
+  margin-top: 0.5rem;
+}

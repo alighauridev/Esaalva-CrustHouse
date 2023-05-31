@@ -18,7 +18,7 @@ const initialState = {
   Cart: {
     cartItems: cartItemsFromLC,
   },
-  UserLogin: {
+  User: {
     userInfo: userInfoFromLC,
   },
   Checkout: {
